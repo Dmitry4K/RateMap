@@ -1,4 +1,4 @@
-package com.example.GeoMarkBack.rest.config
+package ru.dmitry4k.geomarkback.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

@@ -1,4 +1,4 @@
-package com.example.GeoMarkBack.rest.dto
+package ru.dmitry4k.geomarkback.rest.dto
 
 data class GetMarkRequest(
     val lat: Double,

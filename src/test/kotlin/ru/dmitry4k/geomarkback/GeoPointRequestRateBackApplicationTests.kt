@@ -1,10 +1,10 @@
-package com.example.GeoMarkBack
+package ru.dmitry4k.geomarkback
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-class GeoMarkBackApplicationTests {
+class GeoPointRequestRateBackApplicationTests {
 
 	@Test
 	fun contextLoads() {

@@ -1,4 +1,4 @@
-package com.example.GeoMarkBack
+package ru.dmitry4k.geomarkback
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
