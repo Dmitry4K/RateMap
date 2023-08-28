@@ -7,7 +7,7 @@ import ru.dmitry4k.geomarkback.services.geomark.dto.GeoRate
 
 @Component
 class PointRateServiceImpl : PointRateService {
-    override fun addRate(rate: GeoRate, point: GeoPoint) {
+    override fun addRate(rate: Double, point: GeoPoint) {
         TODO("Not yet implemented")
     }
 }

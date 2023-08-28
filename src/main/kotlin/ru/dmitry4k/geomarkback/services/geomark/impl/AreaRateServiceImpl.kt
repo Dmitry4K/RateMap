@@ -16,7 +16,7 @@ class AreaRateServiceImpl(
 ) : AreaRateService {
 
 
-    override fun addAreaRate(rate: GeoRate,@NotEmpty(message = "points must not be empty") points: List<GeoPoint>) {
+    override fun addAreaRate(rate: Double, @NotEmpty(message = "points must not be empty") points: List<GeoPoint>) {
 //        when (points.size) {
 //            0 -> pointRateService.addRate(rate, points.first())
 //            else -> addAreaRateInt(rate, points)
