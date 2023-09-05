@@ -6,8 +6,6 @@ import ru.dmitry4k.geomarkback.services.geomark.AreaRateService
 import ru.dmitry4k.geomarkback.services.geomark.PointRateService
 import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPoint
 import ru.dmitry4k.geomarkback.services.geomark.dto.GeoRate
-import javax.validation.Valid
-import javax.validation.constraints.NotEmpty
 
 @Component
 @Validated
@@ -16,7 +14,7 @@ class AreaRateServiceImpl(
 ) : AreaRateService {
 
 
-    override fun addAreaRate(rate: Double, @NotEmpty(message = "points must not be empty") points: List<GeoPoint>) {
+    override fun addAreaRate(rate: Double, points: List<GeoPoint>) {
 //        when (points.size) {
 //            0 -> pointRateService.addRate(rate, points.first())
 //            else -> addAreaRateInt(rate, points)
