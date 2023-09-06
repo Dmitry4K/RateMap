@@ -1,11 +1,11 @@
-package ru.dmitry4k.geomarkback.services.geomark.impl
+package ru.dmitry4k.geomarkback.services.impl
 
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import ru.dmitry4k.geomarkback.services.geomark.AreaRateService
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoRate
+import ru.dmitry4k.geomarkback.services.AreaRateService
+import ru.dmitry4k.geomarkback.services.dto.GeoRate
 import javax.validation.ConstraintDeclarationException
 
 @SpringBootTest

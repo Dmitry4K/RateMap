@@ -1,6 +1,6 @@
 package ru.dmitry4k.geomarkback.rest.dto
 
-data class GetMarkRequest(
+data class GeoPointRestRequest(
     val lat: Double,
-    val long: Double
+    val lng: Double
 )

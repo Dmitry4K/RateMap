@@ -1,6 +1,6 @@
 package ru.dmitry4k.geomarkback.math
 
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPoint
+import ru.dmitry4k.geomarkback.services.dto.GeoPoint
 import java.lang.Exception
 import kotlin.math.acos
 import kotlin.math.sin

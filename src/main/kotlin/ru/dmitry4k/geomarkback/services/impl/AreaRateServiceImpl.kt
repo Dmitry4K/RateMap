@@ -1,11 +1,11 @@
-package ru.dmitry4k.geomarkback.services.geomark.impl
+package ru.dmitry4k.geomarkback.services.impl
 
 import org.springframework.stereotype.Component
 import org.springframework.validation.annotation.Validated
-import ru.dmitry4k.geomarkback.services.geomark.AreaRateService
-import ru.dmitry4k.geomarkback.services.geomark.PointRateService
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPoint
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoRate
+import ru.dmitry4k.geomarkback.services.AreaRateService
+import ru.dmitry4k.geomarkback.services.PointRateService
+import ru.dmitry4k.geomarkback.services.dto.GeoPoint
+import ru.dmitry4k.geomarkback.services.dto.GeoRate
 
 @Component
 @Validated

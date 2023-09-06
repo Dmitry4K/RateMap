@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.exceptions
+package ru.dmitry4k.geomarkback.rest.exceptions
 
 class InvalidParametersException(
     parameterName: String,

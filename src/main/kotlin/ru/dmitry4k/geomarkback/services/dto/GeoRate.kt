@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.services.geomark.dto
+package ru.dmitry4k.geomarkback.services.dto
 
 data class GeoRate(
     val rate: Double,

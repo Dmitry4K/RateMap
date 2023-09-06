@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.services.data.dao
+package ru.dmitry4k.geomarkback.data.dao
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document

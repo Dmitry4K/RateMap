@@ -1,14 +1,14 @@
-package ru.dmitry4k.geomarkback.services.geomark.impl
+package ru.dmitry4k.geomarkback.services.impl
 
 import org.springframework.stereotype.Component
 import ru.dmitry4k.geomarkback.math.MathEngine
 import ru.dmitry4k.geomarkback.math.MathEngine.Companion.getCircleAreaIntersection
 import ru.dmitry4k.geomarkback.math.MathEngine.Companion.getDistanceBetweenTwoPointsInMeters
-import ru.dmitry4k.geomarkback.services.geomark.PointRateService
-import ru.dmitry4k.geomarkback.services.geomark.PointsService
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPoint
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPointRate
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoRate
+import ru.dmitry4k.geomarkback.services.PointRateService
+import ru.dmitry4k.geomarkback.services.PointsService
+import ru.dmitry4k.geomarkback.services.dto.GeoPoint
+import ru.dmitry4k.geomarkback.services.dto.GeoPointRate
+import ru.dmitry4k.geomarkback.services.dto.GeoRate
 import kotlin.math.pow
 
 private const val EXP = 4

@@ -2,8 +2,8 @@ package ru.dmitry4k.geomarkback.rest
 
 import org.springframework.web.bind.annotation.*
 import ru.dmitry4k.geomarkback.rest.dto.PostAreaMarkRequest
-import ru.dmitry4k.geomarkback.services.geomark.AreaRateService
-import ru.dmitry4k.geomarkback.services.geomark.dto.GeoPoint
+import ru.dmitry4k.geomarkback.services.AreaRateService
+import ru.dmitry4k.geomarkback.services.dto.GeoPoint
 
 @RestController
 @RequestMapping("/geomark/area")
