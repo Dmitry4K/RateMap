@@ -7,6 +7,8 @@ import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration
 
 @Configuration
 class MongoConfig : AbstractMongoClientConfiguration() {
+    // TODO Добавить создание 2dsphere индекса
+    // TODO Добавить процесс инциализации БД точками
     override fun getDatabaseName(): String {
         return "local"
     }
