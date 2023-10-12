@@ -3,11 +3,9 @@ package ru.dmitry4k.geomarkback.rest
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import ru.dmitry4k.geomarkback.rest.dto.GeoPointRestRequest
-import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 import ru.dmitry4k.geomarkback.data.PointsMongoRepository
-import java.math.BigDecimal
-import java.math.BigInteger
+import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
+import ru.dmitry4k.geomarkback.rest.dto.GeoPointRestRequest
 import java.util.logging.Logger
 
 val log = Logger.getLogger("testcontroller")

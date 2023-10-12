@@ -3,8 +3,6 @@ package ru.dmitry4k.geomarkback.data.dao
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import org.springframework.data.mongodb.core.mapping.Document
-import java.math.BigDecimal
-import java.math.BigInteger
 
 @Document(collection = "points")
 data class GeoPointDao(
