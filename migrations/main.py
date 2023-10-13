@@ -9,10 +9,8 @@ from pymongo import MongoClient
 import matplotlib.pyplot as pp
 
 MONGO_URL = "mongodb://admin:admin@localhost:27017/"  # os.environ["MONGO_URL"]
-MONGO_USER = ""  # os.environ["MONGO_USER"]
-MONGO_PASS = ""  # os.environ["MONGO_PASS"]
-BATCH_SIZE = 10_000  # int(os.environ["BATCH_SIZE"])
-POINTS_COUNT = 250_000_000  # int(os.environ["POINTS_COUNT"])
+BATCH_SIZE = 10_000
+POINTS_COUNT = 250_000_000
 # count and distance (meters)
 # 100_000      50_000 (50km) 1 or 2 nearest points
 # 10_000_000 8000-3 nearest
