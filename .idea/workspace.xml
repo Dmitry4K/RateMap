@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="eb85825c-edd2-4a44-8fd6-ce7db0c9ac1b" name="Changes" comment="gw: add application.yaml">
+      <change beforePath="$PROJECT_DIR$/backend/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/migrations/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/migrations/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/migrations/requirements.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GeoMarkBack" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GeoMarkBack" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="GeoMarkBack" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin File" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2R20p2pTuXTztUIADbibKoBXzhQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/Dmitry/IdeaProjects/GeoMarkBack/backend",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Dmitry\IdeaProjects\GeoMarkBack\src\main\kotlin\ru\dmitry4k\geomarkback\data\repository" />
+      <recent name="C:\Users\Dmitry\IdeaProjects\GeoMarkBack\drafts" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="ru.dmitry4k.geomarkback.data" />
+      <recent name="ru.dmitry4k.geomarkback.data.repository" />
+      <recent name="com.example.GeoMarkBack.rest.dto" />
+      <recent name="com.example.GeoMarkBack.rest.config" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Kotlin.GeoMarkBackApplicationKt">
+    <configuration name="AreRateServiceImplTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ru.dmitry4k.geomarkback.services.geomark.impl.AreRateServiceImplTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="AreRateServiceImplTest.Not allowed empty points list" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ru.dmitry4k.geomarkback.services.geomark.impl.AreRateServiceImplTest.Not allowed empty points list&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="MathEngineTest.Test getting exception when two circles do not intersect" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ru.dmitry4k.geomarkback.math.MathEngineTest.Test getting exception when two circles do not intersect&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="MathEngineTest.Test getting intersection of 2 circles" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;ru.dmitry4k.geomarkback.math.MathEngineTest.Test getting intersection of 2 circles&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <ForceTestExec>true</ForceTestExec>
+      <method v="2" />
+    </configuration>
+    <configuration name="GeoMarkBackApplicationKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="ru.dmitry4k.geomarkback.GeoMarkBackApplicationKt" />
+      <module name="GeoMarkBack.main" />
+      <shortenClasspath name="NONE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.MathEngineTest.Test getting exception when two circles do not intersect" />
+      <item itemvalue="Gradle.MathEngineTest.Test getting intersection of 2 circles" />
+      <item itemvalue="Gradle.AreRateServiceImplTest" />
+      <item itemvalue="Gradle.AreRateServiceImplTest.Not allowed empty points list" />
+      <item itemvalue="Kotlin.GeoMarkBackApplicationKt" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.GeoMarkBackApplicationKt" />
+        <item itemvalue="Gradle.MathEngineTest.Test getting exception when two circles do not intersect" />
+        <item itemvalue="Gradle.MathEngineTest.Test getting intersection of 2 circles" />
+        <item itemvalue="Gradle.AreRateServiceImplTest" />
+        <item itemvalue="Gradle.AreRateServiceImplTest.Not allowed empty points list" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="eb85825c-edd2-4a44-8fd6-ce7db0c9ac1b" name="Changes" comment="" />
+      <created>1686433048848</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1686433048848</updated>
+    </task>
+    <task id="LOCAL-00001" summary="init">
+      <created>1686437017111</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1686437017111</updated>
+    </task>
+    <task id="LOCAL-00002" summary="code analysis changes">
+      <created>1686437191787</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686437191787</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add suppres for used bean">
+      <created>1686437245530</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686437245530</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add schemes">
+      <created>1692015961042</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1692015961042</updated>
+    </task>
+    <task id="LOCAL-00005" summary="gw: add function of circle intersection and junit 5">
+      <created>1693251906427</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1693251906427</updated>
+    </task>
+    <task id="LOCAL-00006" summary="gw: update service interface">
+      <created>1693252539317</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1693252539317</updated>
+    </task>
+    <task id="LOCAL-00007" summary="gw: add drafts folder">
+      <created>1693252551121</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1693252551121</updated>
+    </task>
+    <task id="LOCAL-00008" summary="gw: add draft files">
+      <created>1693257557419</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1693257557419</updated>
+    </task>
+    <task id="LOCAL-00009" summary="gw: add PointsService">
+      <created>1693257577417</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1693257577417</updated>
+    </task>
+    <task id="LOCAL-00010" summary="gw: add mongo connector">
+      <created>1693950131169</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1693950131169</updated>
+    </task>
+    <task id="LOCAL-00011" summary="gw: change structure">
+      <created>1694009889135</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1694009889135</updated>
+    </task>
+    <task id="LOCAL-00012" summary="gw: add mark controllers and mongo reps">
+      <created>1697142671255</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1697142671255</updated>
+    </task>
+    <task id="LOCAL-00013" summary="gw: drop unused imports">
+      <created>1697142746770</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1697142746770</updated>
+    </task>
+    <task id="LOCAL-00014" summary="gw: add todo">
+      <created>1697142845859</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1697142845859</updated>
+    </task>
+    <task id="LOCAL-00015" summary="gw: drop unused classes">
+      <created>1697142973393</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1697142973393</updated>
+    </task>
+    <task id="LOCAL-00016" summary="gw: add application.yaml">
+      <created>1697143103586</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1697143103586</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="true" />
+                </map>
+              </option>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="init" />
+    <MESSAGE value="code analysis changes" />
+    <MESSAGE value="add suppres for used bean" />
+    <MESSAGE value="add schemes" />
+    <MESSAGE value="gw: add function of circle intersection and junit 5" />
+    <MESSAGE value="gw: update service interface" />
+    <MESSAGE value="gw: add drafts folder" />
+    <MESSAGE value="gw: add draft files" />
+    <MESSAGE value="gw: add PointsService" />
+    <MESSAGE value="gw: add mongo connector" />
+    <MESSAGE value="gw: change structure" />
+    <MESSAGE value="gw: add mark controllers and mongo reps" />
+    <MESSAGE value="gw: drop unused imports" />
+    <MESSAGE value="gw: add todo" />
+    <MESSAGE value="gw: drop unused classes" />
+    <MESSAGE value="gw: add application.yaml" />
+    <option name="LAST_COMMIT_MESSAGE" value="gw: add application.yaml" />
+  </component>
+</project>
