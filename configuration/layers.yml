@@ -1,0 +1,16 @@
+layers:
+  regions:
+    pointsCount: 100000000
+    searchDistance: 10000
+  towns:
+    pointsCount: 70000000
+    searchDistance: 3000
+  districts:
+    pointsCount:
+    searchDistance:
+  blocks:
+    pointsCount:
+    searchDistance:
+  builds:
+    pointsCount:
+    searchDistance:
