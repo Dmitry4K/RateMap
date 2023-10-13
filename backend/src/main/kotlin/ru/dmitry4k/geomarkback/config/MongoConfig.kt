@@ -14,6 +14,6 @@ class MongoConfig : AbstractMongoClientConfiguration() {
     }
 
     override fun mongoClient(): MongoClient {
-        return MongoClients.create("mongodb://admin:admin@localhost:27017/")
+        return MongoClients.create("mongodb://admin:admin@mongo:27017/")
     }
 }

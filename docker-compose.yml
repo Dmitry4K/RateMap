@@ -1,9 +1,18 @@
 version: '3.3'
 services:
+  backend:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    container_name: backend
+    depends_on:
+      - mongo
+    ports:
+      - '8080:8080'
   mongo:
     ports:
       - '27017:27017'
-    container_name: dkrcomp-mongo
+    container_name: mongo
     restart: always
     logging:
       options:
@@ -12,3 +21,10 @@ services:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     image: mongo
+    networks:
+      - arch-network
+
+networks:
+  arch-network:
+    driver: "bridge"
+    external: false
