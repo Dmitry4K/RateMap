@@ -16,7 +16,7 @@ POINTS_COUNT = 250_000_000
 # 10_000_000 8000-3 nearest
 # 250_000_000
 #
-# 10_000_000 10000 level of regions 6 nearest
+# 100_000_000 10000 level of regions 6 nearest
 # 70_000_000 3000  level of towns
 # 1000  level of districts
 # 250   level of city blocks
