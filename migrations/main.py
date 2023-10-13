@@ -1,4 +1,5 @@
 import os
+import time
 from typing import Mapping, Any
 
 import pymongo
@@ -11,12 +12,14 @@ MONGO_URL = "mongodb://admin:admin@localhost:27017/"  # os.environ["MONGO_URL"]
 MONGO_USER = ""  # os.environ["MONGO_USER"]
 MONGO_PASS = ""  # os.environ["MONGO_PASS"]
 BATCH_SIZE = 10_000  # int(os.environ["BATCH_SIZE"])
-POINTS_COUNT = 70_000_000  # int(os.environ["POINTS_COUNT"])
+POINTS_COUNT = 250_000_000  # int(os.environ["POINTS_COUNT"])
 # count and distance (meters)
 # 100_000      50_000 (50km) 1 or 2 nearest points
-# 70_000_000
-# 10000 level of regions
-# 100_000_000 3000  level of towns
+# 10_000_000 8000-3 nearest
+# 250_000_000
+#
+# 10_000_000 10000 level of regions 6 nearest
+# 70_000_000 3000  level of towns
 # 1000  level of districts
 # 250   level of city blocks
 # 50    level of buildings
@@ -63,10 +66,12 @@ def migrate(client):
 
 def points(client):
     batch_count = round(POINTS_COUNT / BATCH_SIZE)
+    print(f"Starting generating of points at {time.asctime(time.localtime())}")
     for batch_number in range(batch_count):
         print(f"\rGenerating batch {batch_number+1}/{batch_count} with size: {BATCH_SIZE}", end='')
         pts = batch(batch_number, BATCH_SIZE, POINTS_COUNT)
         load(client, pts)
+    print(f"All points was generated at {time.asctime(time.localtime())}")
 
 
 def close(client):
