@@ -1,0 +1,18 @@
+layers:
+  regions:
+    searchDistance: 10000
+  towns:
+    searchDistance: 3000
+  districts:
+    searchDistance: 1000
+  blocks: #Impossible because of large calc time (10 days) and space capacity (3.5 Tb)
+    searchDistance: 250
+  builds: #Impossible because of large calc time (273 days) and space capacity (90 Tb)
+    searchDistance: 50
+
+areas:
+  Moscow:
+    center:
+      lat: 55.755820
+      lng: 37.617633
+    radius: 30000 #meters
