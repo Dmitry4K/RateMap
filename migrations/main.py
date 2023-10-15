@@ -1,5 +1,6 @@
 import os
 import time
+from math import ceil
 from typing import Mapping, Any
 
 import pymongo
@@ -80,7 +81,7 @@ def migrate(client):
 
 
 def points(client):
-    batch_count = round(POINTS_COUNT / BATCH_SIZE)
+    batch_count = ceil(POINTS_COUNT / BATCH_SIZE)
     print(f"Starting generating of points at {time.asctime(time.localtime())}")
     for batch_number in range(batch_count):
         print(f"\rGenerating batch {batch_number+1}/{batch_count} with size: {BATCH_SIZE}", end='')
@@ -104,10 +105,14 @@ def batch(batch_number: int, batch_size: int, num_pts: int):
     # print(min(lat))
     # print(max(lng))
     # print(min(lng))
-    # pp.figure(figsize=(16, 12)).add_subplot(111, projection='3d').scatter(x, y, z)
-    # pp.xlabel('X')
-    # pp.ylabel('Y')
-    # pp.show()
+    # pp.ion()
+    # pp.figure(figsize=(16, 12)).add_subplot(111, projection='3d')
+    # for i in range(len(x)):
+    #     pp.subplot(111).scatter(x[:i], y[:i], z[:i])
+    #     pp.xlabel('X')
+    #     pp.ylabel('Y')
+    #     pp.draw()
+    #     pp.pause(0.0001)
     return lat, lng
 
 
