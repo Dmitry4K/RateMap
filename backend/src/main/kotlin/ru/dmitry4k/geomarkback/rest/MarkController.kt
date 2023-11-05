@@ -13,7 +13,7 @@ class MarkController(
     @PutMapping
     fun putMark(@Valid @RequestBody request: PostMarkRequestBody) {
         with(request) {
-            marksService.saveMark(mark, lat, lng)
+            marksService.saveMark(mark, lat, lng, depth)
         }
     }
 }

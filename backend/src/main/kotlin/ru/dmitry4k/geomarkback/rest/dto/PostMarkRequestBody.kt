@@ -8,5 +8,6 @@ data class PostMarkRequestBody(
     val lng: Double,
     @Min(1)
     @Max(5)
-    val mark: Double
+    val mark: Double,
+    val depth: Long
 )
