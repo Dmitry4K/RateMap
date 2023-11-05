@@ -15,4 +15,4 @@ areas:
     center:
       lat: 55.755820
       lng: 37.617633
-    radius: 30000 #meters
+    radius: 50000 #meters
