@@ -11,7 +11,7 @@ import matplotlib.pyplot as pp
 
 MONGO_URL = "mongodb://admin:admin@localhost:27017/"  # os.environ["MONGO_URL"]
 BATCH_SIZE = 10_000
-POINTS_COUNT = 250_000_000
+POINTS_COUNT = 100_000_000 #250_000_000
 # count and distance (meters)
 # 100_000      50_000 (50km) 1 or 2 nearest points
 # 10_000_000 8000-3 nearest
@@ -82,12 +82,13 @@ def migrate(client):
 
 def points(client):
     batch_count = ceil(POINTS_COUNT / BATCH_SIZE)
-    print(f"Starting generating of points at {time.asctime(time.localtime())}")
+    start = time.time()
     for batch_number in range(batch_count):
         print(f"\rGenerating batch {batch_number+1}/{batch_count} with size: {BATCH_SIZE}", end='')
         pts = batch(batch_number, BATCH_SIZE, POINTS_COUNT)
         load(client, pts)
-    print(f"All points was generated at {time.asctime(time.localtime())}")
+    print()
+    print(f"All points was generated in {time.time() - start}")
 
 
 def close(client):
