@@ -14,8 +14,8 @@ import kotlin.random.Random
 
 @Service
 class YandexTileServiceImpl : YandexTileService {
-    private val radius = 32
-    private val size = 128
+    private val radius = 16
+    private val size = 64
     private val alphaFloat = 0.3
     private val alphaInt = (alphaFloat * 256).toInt()
     private val minColor = Color(Color.RED.red, Color.RED.green, Color.RED.blue, alphaInt)
