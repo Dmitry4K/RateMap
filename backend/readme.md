@@ -49,3 +49,40 @@ Rel_D(back, db, "Передача данных для хранения")
 Rel_R(back, ext, "Получение данных о стоимости недвижомости","HTTP")
 @enduml
 ```
+
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("microService", $shape=EightSidedShape(), $bgColor="CornflowerBlue", $fontColor="white", $legendText="microservice")
+AddElementTag("storage", $shape=RoundedBoxShape(), $bgColor="lightSkyBlue", $fontColor="white")
+
+Person(user, "Пользователь")
+
+System_Boundary(ext, "Открытые внешние системы для получения данных по районам") {
+       Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений")
+       Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений")
+       Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений")
+}
+
+System_Boundary(app, "Приложение оценки районов города") {
+    System_Boundary(server, "Серверная часть приложенрия") {
+        Container(redis, "Кеш", "Redis", "Хранение подсчитанной карты", $tags = "microservice")
+        Container(migrate, "Генератор тепловой карты", "Redis", "Хранение подсчитанной карты", $tags = "microservice")
+        Container(back, "Сервер", "Java(Kotlin), Spring", "Контроллеры для получения и выгрузки тепловых карт", $tags = "microservice")
+        ContainerDb(db, "База данных", "MongoDB", "Хранение гео-данных", $tags = "storage")
+        
+    }
+    System_Boundary(front, "Интерфейс приложения") {
+      Container(android, "Мобильное приложение", "Java(Kotlin), Android SDK, Yandex Map Kit", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "microService")
+    }
+}
+
+Rel_R(user, android, "Просмотр тепловых карт")
+Rel_R(android, back, "Получение тепловых карт, отправка оценок")
+Rel_D(back, db, "Получение данных для построения тепловых карт")
+Rel_R(back, ext, "Получение данных о стоимости недвижомости","HTTP")
+Rel_R(migrate, db, "Генерация точек карты","JDBC")
+Rel_D(back, redis, "Кеширование","TCP")
+@enduml
+```
