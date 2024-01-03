@@ -22,6 +22,7 @@ class InputListenerImpl(
         )
         fragmentActivity.supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_bottom, androidx.appcompat.R.anim.abc_slide_out_bottom)
             .replace(R.id.fragmentContainer, ratingFragment)
             .commit()
     }

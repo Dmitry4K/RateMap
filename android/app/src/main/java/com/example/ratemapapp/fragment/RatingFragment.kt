@@ -26,6 +26,12 @@ class RatingFragment(
     private lateinit var view: View
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         view = inflater.inflate(R.layout.rate_fragment, container, false)
+
+        return view
+    }
+
+    override fun onStart() {
+        super.onStart()
         view.findViewById<Button>(R.id.rateButton).setOnClickListener {
             close()
         }
@@ -39,12 +45,11 @@ class RatingFragment(
             p.longitude.toString().replace(',','.', true)
         )
         view.findViewById<ViewGroup>(R.id.rateFragmentRootLayout).setOnClickListener { moveCamera(p) }
-        return view
     }
 
-    override fun onDestroyView() {
+    override fun onStop() {
+        super.onStop()
         placeMark.remove()
-        super.onDestroyView()
     }
 
     private fun moveCamera(point: Point) {
@@ -58,6 +63,10 @@ class RatingFragment(
     private fun close() {
         fragmentActivity.supportFragmentManager
             .beginTransaction()
+            .setCustomAnimations(
+                androidx.transition.R.anim.abc_slide_out_bottom,
+                androidx.transition.R.anim.abc_slide_out_bottom
+            )
             .remove(this)
             .commit()
     }
