@@ -11,7 +11,7 @@ layers:
     searchDistance: 50
 
 areas:
-  Moscow:
+  moscow:
     center:
       lat: 55.755820
       lng: 37.617633
