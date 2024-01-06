@@ -58,7 +58,6 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 8080
-      nodePort: 30080
 ---
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
