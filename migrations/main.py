@@ -9,9 +9,14 @@ from pymongo import MongoClient
 
 import matplotlib.pyplot as pp
 
-MONGO_URL = "mongodb://admin:admin@localhost:27017/"  # os.environ["MONGO_URL"]
+MONGO_USER = os.getenv("MONGO_USER")
+MONGO_PASS = os.getenv("MONGO_PASS")
+MONGO_DB_URL = os.getenv("MONGO_DB_URL")
+MONGO_CRT_PATH = os.getenv("MONGO_CRT_PATH")
+MONGO_URL = f"mongodb://{MONGO_USER}:{MONGO_PASS}@{MONGO_DB_URL}/?authMechanism=DEFAULT&tls=true&tlsCAFile={MONGO_CRT_PATH}"
 BATCH_SIZE = 10_000
 POINTS_COUNT = 100_000_000 #250_000_000
+DATABASE_NAME = "ratemap-mongo-db"
 # count and distance (meters)
 # 100_000      50_000 (50km) 1 or 2 nearest points
 # 10_000_000 8000-3 nearest
@@ -53,7 +58,7 @@ def connect():
 
 def migrate(client):
     tablename = "points"
-    db = client["local"]
+    db = client[DATABASE_NAME]
     colla = {'locale': 'en_US', 'strength': 2, 'numericOrdering': True, 'backwards': False}
     if tablename not in db.list_collection_names():
         print(f"Creating collection {tablename} ...")
@@ -135,7 +140,7 @@ def load(client: MongoClient[Mapping[str, Any]], pts):
             "_class": "ru.dmitry4k.geomarkback.data.dao.GeoPointDao"
         } for x in stacked
     ]
-    resp = client["local"]["points"].insert_many(objects)
+    resp = client[DATABASE_NAME]["points"].insert_many(objects)
     # print(f"Successfully inserted {len(resp.inserted_ids)} rows")
 
 
