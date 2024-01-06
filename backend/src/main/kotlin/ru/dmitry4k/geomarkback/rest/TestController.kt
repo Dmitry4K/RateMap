@@ -10,10 +10,15 @@ import java.util.logging.Logger
 
 val log = Logger.getLogger("testcontroller")
 @RestController
-@RequestMapping("/test")
+@RequestMapping("/api/test")
 class TestController(
     val repository: PointsMongoRepository
 ) {
+    @GetMapping
+    fun test() : String {
+        return "Test!"
+    }
+
     @PutMapping("/send")
     fun sendPoints(@RequestBody requestPoint: GeoPointRestRequest) {
         val point = GeoPointDao().apply {

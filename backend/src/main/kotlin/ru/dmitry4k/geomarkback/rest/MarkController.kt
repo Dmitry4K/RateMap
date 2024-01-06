@@ -6,7 +6,7 @@ import ru.dmitry4k.geomarkback.rest.dto.PostMarkRequestBody
 import ru.dmitry4k.geomarkback.service.MarksService
 
 @RestController
-@RequestMapping("/mark")
+@RequestMapping("/api/mark")
 class MarkController(
     val marksService: MarksService
 ) {

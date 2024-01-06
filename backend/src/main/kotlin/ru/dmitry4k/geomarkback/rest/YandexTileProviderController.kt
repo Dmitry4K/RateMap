@@ -10,7 +10,7 @@ import ru.dmitry4k.geomarkback.service.YandexTileService
 
 
 @RestController
-@RequestMapping("/tile/yandex/png")
+@RequestMapping("/api/tile/yandex/png")
 class YandexTileProviderController(
     val tileRenderer: YandexTileService
 ) {
