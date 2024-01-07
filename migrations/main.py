@@ -72,7 +72,8 @@ def create_points(client, config):
     for layer in layers:
         for area in areas:
             table_name = area + '_' + layer
-            pts_count = 16 * 6400 * 6400 * 1000 * 1000 / layers[layer]['searchDistance']
+            d = layers[layer]['searchDistance']
+            pts_count = 16 * 6400 * 6400 * 1000 * 1000 / (d * d)
             batch_size = BATCH_SIZE
             lat = areas[area]['center']['lat']
             lng = areas[area]['center']['lng']
@@ -113,19 +114,22 @@ def points(client, table_name, pts_count, batch_size, lat, lng, radius):
     batch_count = ceil(pts_count / batch_size)
     start = time.time()
     elapsed_points = radius * radius * pts_count / (4 * 6400 * 6400 * 1000 * 1000)
+    curr_points_num = 0
     for batch_number in range(batch_count):
-        curr_points_num = batch_number * batch_size
         print(
             f"\rGenerated {curr_points_num}({curr_points_num * 100 / elapsed_points:.2f}%) "
             f"points for table: {table_name}, elapsed time: {time.time() - start:.2f}",
             end='')
         pts = batch(batch_number, batch_size, pts_count, lat, lng)
         pts = np.dstack((pts[1], pts[0])).reshape((batch_size, 2))
-        checking = check_batch(pts, radius, lat, lng, 25)
+        pts = filter_batch(pts, radius, lat, lng)
         if len(pts) > 0:
             load(client, pts, table_name)
-        if not checking:
-            print()
+            curr_points_num += len(pts)
+        if len(pts) < batch_size:
+            print(
+                f"\rGenerated {curr_points_num}({curr_points_num * 100 / elapsed_points:.2f}%) "
+                f"points for table: {table_name}, elapsed time: {time.time() - start:.2f}")
             return
     print()
 
@@ -133,11 +137,20 @@ def points(client, table_name, pts_count, batch_size, lat, lng, radius):
 def close(client):
     client.close()
 
+def geo_filter(point, radius, lat, lng):
+    return radius > geodist.geodesic((point[1], point[0]), (lat, lng)).m
+
+def filter_batch(pts, radius, lat, lng):
+    result = []
+    for point in pts:
+        if geo_filter(point, radius, lat, lng):
+            result.append(point)
+    return np.array(result)
 
 def check_batch(pts, radius, lat, lng, pts_check_count) -> bool:
     for _ in range(pts_check_count):
         p = pts[random.randint(0, len(pts)-1)]
-        if radius < geodist.geodesic((p[1], p[0]), (lat, lng)).m:
+        if not geo_filter(p, radius, lat, lng):
             return False
     return True
 
@@ -176,8 +189,7 @@ def load(client: MongoClient[Mapping[str, Any]], pts, table_name):
             "point": {
                 "type": "Point",
                 "coordinates": [x[0], x[1]]
-            },
-            "_class": "ru.dmitry4k.geomarkback.data.dao.GeoPointDao"
+            }
         } for x in pts
     ]
     resp = client[DATABASE_NAME][table_name].insert_many(objects)
