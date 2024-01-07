@@ -19,7 +19,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-	implementation("org.springframework.data:spring-data-mongodb:4.1.3")
+	implementation("org.springframework.data:spring-data-mongodb")
 	implementation("org.mongodb:mongodb-driver-sync")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")

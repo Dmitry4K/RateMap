@@ -2,6 +2,7 @@ package ru.dmitry4k.geomarkback.rest
 
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
+import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 import ru.dmitry4k.geomarkback.rest.dto.PostMarkRequestBody
 import ru.dmitry4k.geomarkback.service.MarksService
 
@@ -15,5 +16,10 @@ class MarkController(
         with(request) {
             marksService.saveMark(mark, lat, lng, depth)
         }
+    }
+
+    @GetMapping
+    fun getMarks(@RequestParam lat: Double, @RequestParam lng: Double, @RequestParam depth: Long): List<GeoPointDao> {
+        return marksService.getMarks(lat, lng, depth)
     }
 }
