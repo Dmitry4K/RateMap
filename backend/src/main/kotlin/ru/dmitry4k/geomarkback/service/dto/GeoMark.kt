@@ -3,10 +3,9 @@ package ru.dmitry4k.geomarkback.service.dto
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 
-data class GeoPointDto(
+data class GeoMark(
     val id: String? = null,
-    val lat: Double,
-    val lng: Double,
+    val geoPoint: GeoPoint,
     var mark: Double,
     var count: Long
 ) {
@@ -14,15 +13,14 @@ data class GeoPointDto(
         id = id,
         mark = mark,
         count = count,
-        point = GeoJsonPoint(lng, lat)
+        point = GeoJsonPoint(geoPoint.lng, geoPoint.lat)
     )
 
     companion object {
         fun valueOf(dao: GeoPointDao) =
-            GeoPointDto(
+            GeoMark(
                 id = dao.id,
-                lat = dao.point!!.y,
-                lng = dao.point!!.x,
+                geoPoint = GeoPoint(dao.point!!.y, dao.point!!.x),
                 mark = dao.mark!!,
                 count = dao.count!!
             )
