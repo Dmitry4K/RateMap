@@ -15,7 +15,7 @@ class RateMapMongoProviderImpl(
     override fun getArea() = area
     override fun getSearchDistance() = distance
     override fun findNear(lng: Double, lat: Double): List<GeoPointDao> {
-        val maxDistance = distance * 1.2
+        val maxDistance = distance * 4.0
         val query = BasicQuery(NEAR_QUERY.format(lng.toString().replace(',','.'), lat.toString().replace(',','.'), maxDistance.toInt(), 0))
         return mongoTemplate.find(query, GeoPointDao::class.java, tableName)
     }

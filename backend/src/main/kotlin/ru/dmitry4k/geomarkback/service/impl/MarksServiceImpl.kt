@@ -30,6 +30,6 @@ class MarksServiceImpl(pointsProviders: List<RateMapPointProvider>): MarksServic
             if (depth < pointsService.getSearchDistance()) break
             selectedPointService = pointsService
         }
-        return selectedPointService.findNear(lat, lng)
+        return selectedPointService.findNear(lng, lat)
     }
 }

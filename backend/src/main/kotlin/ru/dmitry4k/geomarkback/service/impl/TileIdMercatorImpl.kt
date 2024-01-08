@@ -19,9 +19,10 @@ class TileIdMercatorImpl(
     private val xAxis = right-left
 
     override fun getPointByTileId(tileId: TileId): GeoPoint {
+        val tilesCount = getTileCount(tileId.z)
         val xy = XYPoint(
-            normalize(tileId.x, tileId.z.toDouble(), xAxis) - xAxis / 2.0,
-            normalize(tileId.y, tileId.z.toDouble(), yAxis) - yAxis / 2.0
+            normalize(tileId.x, tilesCount.toDouble(), xAxis) - xAxis / 2.0,
+            normalize(tilesCount - 1 - tileId.y, tilesCount.toDouble(), yAxis) - yAxis / 2.0
         )
         return mercator.xyToPoint(xy)
     }
@@ -32,10 +33,15 @@ class TileIdMercatorImpl(
 
     override fun getTileIdByPoint(geoPoint: GeoPoint, z: Int): TileId {
         val xy = mercator.pointToXY(geoPoint)
+        val tilesCount = getTileCount(z)
         return TileId(
-            normalize(xy.x + xAxis / 2.0, xAxis, z.toDouble()),
-            normalize(xy.y + yAxis / 2.0, yAxis, z.toDouble()),
+            normalize(xy.x + xAxis / 2.0, xAxis, tilesCount.toDouble()),
+            tilesCount - 1 - normalize(xy.y + yAxis / 2.0, yAxis, tilesCount.toDouble()),
             z
         )
+    }
+
+    private fun getTileCount(z: Int): Int {
+        return 1 shl z
     }
 }

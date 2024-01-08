@@ -1,23 +1,31 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
+import ru.dmitry4k.geomarkback.service.MarksService
+import ru.dmitry4k.geomarkback.service.Mercator
 import ru.dmitry4k.geomarkback.service.TileIdMercator
 import ru.dmitry4k.geomarkback.service.YandexTileService
+import ru.dmitry4k.geomarkback.service.dto.GeoPoint
+import ru.dmitry4k.geomarkback.service.dto.TileId
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.io.ByteArrayOutputStream
+import java.util.logging.Logger
 import javax.imageio.ImageIO
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
-import kotlin.random.Random
+
+val log = Logger.getLogger("YandexTileServiceImpl")
 
 @Service
 class YandexTileServiceImpl(
-    val tileIdMercator: TileIdMercator
+    val tileIdMercator: TileIdMercator,
+    val mercator: Mercator,
+    val markService: MarksService
 ) : YandexTileService {
-    private val radius = 16
+    private val radius = 128
     private val size = 256
     private val alphaFloat = 0.3
     private val alphaInt = (alphaFloat * 256).toInt()
@@ -25,16 +33,30 @@ class YandexTileServiceImpl(
     private val maxColor = Color(Color.GREEN.red, Color.GREEN.green, Color.GREEN.blue, alphaInt)
     private val defaultColor = getColor(0.5, minColor, maxColor)
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
-        val points = mutableListOf<XYZDoublePoint>()
-        val step = (radius *1.2).toInt()
-        var i = 0
-        for (cX in 0 until size + radius step step) {
-            i++
-            for (cY in (step / 2 * (i % 2)) until size + radius step step) {
-                points.add(XYZDoublePoint(cX, cY, Random.nextDouble()))
+        val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
+        val maxDistance = listOf(
+            tileIdMercator.getPointByTileId(TileId(x.toDouble(), y.toDouble(), z)),
+            tileIdMercator.getPointByTileId(TileId(x + 1.0, y.toDouble(), z)),
+            tileIdMercator.getPointByTileId(TileId(x.toDouble(), y + 1.0, z)),
+            tileIdMercator.getPointByTileId(TileId(x + 1.0, y + 1.0, z))
+        ).maxOfOrNull { mercator.distance(it, center) }!! * 2.0
+        println("lat: ${center.lat}, lng: ${center.lng}")
+        val points = markService.getMarks(center.lat, center.lng, maxDistance.toLong())
+            .map {
+                val geoPoint = GeoPoint(it.point!!.y, it.point!!.x)
+                val tileId = tileIdMercator.getTileIdByPoint(geoPoint, z)
+
+                XYZDoublePoint(
+                    (size * getFractionalPart(tileId.x)).toInt(),
+                    (size * getFractionalPart(tileId.y)).toInt(),
+                    it.mark!! / 5.0
+                )
             }
-        }
         return renderTile(points)
+    }
+
+    private fun getFractionalPart(a: Double): Double {
+        return a - a.toInt().toDouble()
     }
     data class XYZDoublePoint(val x: Int, val y: Int, val z: Double)
     data class XYColor(val x: Int, val y: Int, val color: Color)
@@ -61,8 +83,13 @@ class YandexTileServiceImpl(
                         .reduce { a, i -> a.zip(i) { f, s -> f + s } }
                     val kSum = sums[3]
                     val components = sums.subList(0, 3).map { it / kSum }.map(Double::toInt)
-                    val color = getColor(1 - kSum, Color(components[0], components[1], components[2]), defaultColor)
-                    bufferedImage.setRGB(x, y, color.rgb)
+                    val componentColor = Color(components[0], components[1], components[2], alphaInt)
+                    if (kSum < 1.0) {
+                        val color = getColor(kSum, defaultColor, componentColor)
+                        bufferedImage.setRGB(x, y, color.rgb)
+                    } else {
+                        bufferedImage.setRGB(x, y, componentColor.rgb)
+                    }
                 }
             }
         }
@@ -74,7 +101,7 @@ class YandexTileServiceImpl(
 
     private fun getColor(z: Double, minColor: Color, maxColor: Color): Color {
         if (z < 0.0 || z > 1.0) {
-            throw Exception("Invalid z value")
+            log.warning("Invalid z value: $z")
         }
         val red = getColorInt(z, minColor.red, maxColor.red)
         val green = getColorInt(z, minColor.green, maxColor.green)
@@ -84,7 +111,7 @@ class YandexTileServiceImpl(
 
     private fun getColorInt(z: Double, minColorComponent: Int, maxColorComponent: Int): Int {
         if (z < 0.0 || z > 1.0) {
-            throw Exception("Invalid z value")
+            throw Exception("Invalid z value: $z")
         }
         return max(min(255, (z * maxColorComponent + (1 - z) * minColorComponent).toInt()), 0)
     }
