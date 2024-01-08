@@ -1,5 +1,6 @@
 package ru.dmitry4k.geomarkback.service.impl
 
+import org.springframework.stereotype.Component
 import ru.dmitry4k.geomarkback.service.Mercator
 import ru.dmitry4k.geomarkback.service.dto.GeoPoint
 import ru.dmitry4k.geomarkback.service.dto.XYPoint
@@ -9,6 +10,8 @@ import kotlin.math.ln
 import kotlin.math.tan
 
 private const val RADIUS_MAJOR = 6378137.0
+
+@Component
 class SphericalMercatorImpl : Mercator {
     override fun pointToXY(geoPoint: GeoPoint)= with(geoPoint) {
         XYPoint(xAxisProjection(lng), yAxisProjection(lat))
@@ -27,7 +30,7 @@ class SphericalMercatorImpl : Mercator {
 
     private fun latAxisProjection(y: Double): Double {
         return Math.toDegrees(
-            2.0 * atan(exp(y/ RADIUS_MAJOR)) - Math.PI / 2.0
+            2.0 * atan(exp(y / RADIUS_MAJOR)) - Math.PI / 2.0
         )
     }
 }

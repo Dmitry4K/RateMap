@@ -1,6 +1,7 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
+import ru.dmitry4k.geomarkback.service.TileIdMercator
 import ru.dmitry4k.geomarkback.service.YandexTileService
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -13,9 +14,11 @@ import kotlin.math.sqrt
 import kotlin.random.Random
 
 @Service
-class YandexTileServiceImpl : YandexTileService {
+class YandexTileServiceImpl(
+    val tileIdMercator: TileIdMercator
+) : YandexTileService {
     private val radius = 16
-    private val size = 64
+    private val size = 256
     private val alphaFloat = 0.3
     private val alphaInt = (alphaFloat * 256).toInt()
     private val minColor = Color(Color.RED.red, Color.RED.green, Color.RED.blue, alphaInt)
