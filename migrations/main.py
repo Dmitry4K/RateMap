@@ -184,7 +184,7 @@ def batch(batch_number: int, batch_size: int, num_pts: int, lat_center, lng_cent
 def load(client: MongoClient[Mapping[str, Any]], pts, table_name):
     objects = [
         {
-            "mark": 0.0,
+            "mark": random.random() * 5.0,
             "count": 0.0,
             "point": {
                 "type": "Point",
