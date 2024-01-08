@@ -48,6 +48,6 @@ class MainActivity : MapKitActivity() {
         setContentView(R.layout.activity_main)
         mapView = findViewById(R.id.mapView)
         inputListener = InputListenerImpl(this@MainActivity, mapView)
-        projection = Projections.getWgs84Mercator()
+        projection = Projections.getSphericalMercator()
     }
 }

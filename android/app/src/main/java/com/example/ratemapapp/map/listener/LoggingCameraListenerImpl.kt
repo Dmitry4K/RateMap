@@ -8,7 +8,6 @@ import com.yandex.mapkit.map.Map
 
 class LoggingCameraListenerImpl : CameraListener {
     override fun onCameraPositionChanged(p0: Map, p1: CameraPosition, p2: CameraUpdateReason, p3: Boolean) {
-        Log.i("Camera", p1.target.let { it.latitude.toString() + ' ' + it.longitude.toString()} )
-        //l.invalidate("0.0.0")
+        //Log.i("Camera", p1.target.let { it.latitude.toString() + ' ' + it.longitude.toString()} )
     }
 }

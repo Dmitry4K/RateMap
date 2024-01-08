@@ -6,4 +6,6 @@ import ru.dmitry4k.geomarkback.service.dto.XYPoint
 interface Mercator {
     fun pointToXY(geoPoint: GeoPoint): XYPoint
     fun xyToPoint(xyPoint: XYPoint): GeoPoint
+
+    fun distance(a: GeoPoint, b: GeoPoint): Long
 }
