@@ -3,7 +3,7 @@ package ru.dmitry4k.geomarkback.rest
 import jakarta.validation.Valid
 import org.springframework.web.bind.annotation.*
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
-import ru.dmitry4k.geomarkback.rest.dto.PostMarkRequestBody
+import ru.dmitry4k.geomarkback.dto.PostMarkRequestBody
 import ru.dmitry4k.geomarkback.service.MarksService
 
 @RestController

@@ -3,11 +3,12 @@ package ru.dmitry4k.geomarkback.service.impl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import ru.dmitry4k.geomarkback.service.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.GeoPoint
 import kotlin.math.abs
 
 class SphericalMercatorImplTest {
     private val mercator = SphericalMercatorImpl()
+    private val distance = SphericalDistanceImpl(SphericalMercatorImpl.RADIUS_MAJOR)
 
     @Test
     fun mappingTest() {
@@ -35,6 +36,6 @@ class SphericalMercatorImplTest {
     fun distanceTest() {
         val a = GeoPoint(55.7520233, 37.6174994)
         val b = GeoPoint(52.6031000, 39.5708000)
-        assertEquals(372923, mercator.distance(a, b))
+        assertEquals(372923, distance.distance(a, b))
     }
 }

@@ -1,7 +1,7 @@
 package ru.dmitry4k.geomarkback.service
 
-import ru.dmitry4k.geomarkback.service.dto.GeoPoint
-import ru.dmitry4k.geomarkback.service.dto.TileId
+import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.TileId
 
 interface TileIdMercator {
     fun getPointByTileId(tileId: TileId): GeoPoint

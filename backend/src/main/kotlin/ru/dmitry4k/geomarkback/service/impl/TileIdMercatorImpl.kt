@@ -1,20 +1,20 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Component
+import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.TileId
+import ru.dmitry4k.geomarkback.dto.XYPoint
 import ru.dmitry4k.geomarkback.service.Mercator
 import ru.dmitry4k.geomarkback.service.TileIdMercator
-import ru.dmitry4k.geomarkback.service.dto.GeoPoint
-import ru.dmitry4k.geomarkback.service.dto.TileId
-import ru.dmitry4k.geomarkback.service.dto.XYPoint
 
 @Component
 class TileIdMercatorImpl(
     private val mercator: Mercator
 ) : TileIdMercator {
-    private val top = 23810769.32
-    private val bottom = -23810769.32
-    private val right = 20037508.34
-    private val left = -20037508.34
+    private val top = mercator.top()
+    private val bottom = mercator.bottom()
+    private val right = mercator.right()
+    private val left = mercator.left()
     private val yAxis = top-bottom
     private val xAxis = right-left
 

@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.rest.dto
+package ru.dmitry4k.geomarkback.dto
 
 import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min

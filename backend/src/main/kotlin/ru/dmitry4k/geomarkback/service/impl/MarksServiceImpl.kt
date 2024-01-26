@@ -1,7 +1,7 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
-import ru.dmitry4k.geomarkback.data.RateMapPointProvider
+import ru.dmitry4k.geomarkback.service.RateMapPointProvider
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 import ru.dmitry4k.geomarkback.service.MarksService
 

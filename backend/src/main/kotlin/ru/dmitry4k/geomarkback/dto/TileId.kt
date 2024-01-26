@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.service.dto
+package ru.dmitry4k.geomarkback.dto
 
 data class TileId(
     val x: Double,

@@ -3,8 +3,8 @@ package ru.dmitry4k.geomarkback.config.properties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.data.mongodb.core.MongoTemplate
-import ru.dmitry4k.geomarkback.data.RateMapPointProvider
-import ru.dmitry4k.geomarkback.data.impl.RateMapMongoProviderImpl
+import ru.dmitry4k.geomarkback.service.RateMapPointProvider
+import ru.dmitry4k.geomarkback.service.impl.RateMapMongoProviderImpl
 
 @Configuration
 class PointsProvidersConfig(
@@ -16,9 +16,11 @@ class PointsProvidersConfig(
         val providers = mutableListOf<RateMapPointProvider>()
         for (area in rateMapProperties.areas) {
             for (layers in rateMapProperties.layers) {
-                providers.add(RateMapMongoProviderImpl(
+                providers.add(
+                    RateMapMongoProviderImpl(
                     area.key, area.key+"_"+layers.key, layers.value.searchDistance, mongoTemplate
-                ))
+                )
+                )
             }
         }
         return providers

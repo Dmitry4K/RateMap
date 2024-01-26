@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.data
+package ru.dmitry4k.geomarkback.service
 
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 

@@ -2,7 +2,8 @@ package ru.dmitry4k.geomarkback.service.impl
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import ru.dmitry4k.geomarkback.service.dto.TileId
+import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.TileId
 import kotlin.math.abs
 
 class TileIdMercatorImplTest {
@@ -30,5 +31,12 @@ class TileIdMercatorImplTest {
             assertTrue(abs(it.first.y - it.second.y) < epsilon, "y is invalid")
             assertTrue(abs(it.first.z - it.second.z) < epsilon, "z is invalid")
         }
+    }
+
+    @Test
+    fun test() {
+        println(tileIdMercator.getTileIdByPoint(GeoPoint(55.7520233, 37.6174994),2))
+        println(tileIdMercator.getTileIdByPoint(GeoPoint(55.7520233, 37.6174994),7))
+        println(tileIdMercator.getTileIdByPoint(GeoPoint(55.7520233, 37.6174994),14))
     }
 }

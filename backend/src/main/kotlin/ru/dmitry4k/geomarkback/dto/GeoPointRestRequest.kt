@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.rest.dto
+package ru.dmitry4k.geomarkback.dto
 
 data class GeoPointRestRequest(
     val lat: Double,

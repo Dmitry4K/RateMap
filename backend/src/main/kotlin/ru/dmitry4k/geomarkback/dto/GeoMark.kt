@@ -1,4 +1,4 @@
-package ru.dmitry4k.geomarkback.service.dto
+package ru.dmitry4k.geomarkback.dto
 
 import org.springframework.data.mongodb.core.geo.GeoJsonPoint
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
