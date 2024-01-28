@@ -20,6 +20,6 @@ class MarkController(
 
     @GetMapping
     fun getMarks(@RequestParam lat: Double, @RequestParam lng: Double, @RequestParam depth: Long): List<GeoPointDao> {
-        return marksService.getMarks(lat, lng, depth)
+        return marksService.getMarks(lat, lng, depth).points
     }
 }

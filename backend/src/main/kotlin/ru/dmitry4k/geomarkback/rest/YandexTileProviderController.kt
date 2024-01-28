@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
-import ru.dmitry4k.geomarkback.service.YandexTileService
+import ru.dmitry4k.geomarkback.service.YandexTileProvider
 
 
 @RestController
 @RequestMapping("/api/tile/yandex/png")
 class YandexTileProviderController(
-    val tileRenderer: YandexTileService
+    val tileRenderer: YandexTileProvider
 ) {
     @GetMapping
     fun getTileByTileId(

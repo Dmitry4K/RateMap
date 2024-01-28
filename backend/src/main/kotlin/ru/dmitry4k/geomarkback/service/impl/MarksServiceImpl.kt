@@ -1,9 +1,9 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
-import ru.dmitry4k.geomarkback.service.RateMapPointProvider
-import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
+import ru.dmitry4k.geomarkback.dto.MarksResult
 import ru.dmitry4k.geomarkback.service.MarksService
+import ru.dmitry4k.geomarkback.service.RateMapPointProvider
 
 
 @Service
@@ -24,12 +24,12 @@ class MarksServiceImpl(pointsProviders: List<RateMapPointProvider>): MarksServic
         }
     }
 
-    override fun getMarks(lat: Double, lng: Double, depth: Long): List<GeoPointDao> {
+    override fun getMarks(lat: Double, lng: Double, depth: Long): MarksResult {
         var selectedPointService = sortedPointsServices.first()
         for (pointsService in sortedPointsServices) {
             if (depth < pointsService.getSearchDistance()) break
             selectedPointService = pointsService
         }
-        return selectedPointService.findNear(lng, lat)
+        return MarksResult(selectedPointService.findNear(lng, lat), selectedPointService.getSearchDistance())
     }
 }
