@@ -1,12 +1,12 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
-import ru.dmitry4k.geomarkback.service.GeoMathService
+import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.TileId
+import ru.dmitry4k.geomarkback.service.Distance
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.TileIdMercator
 import ru.dmitry4k.geomarkback.service.YandexTileService
-import ru.dmitry4k.geomarkback.dto.GeoPoint
-import ru.dmitry4k.geomarkback.dto.TileId
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
@@ -22,7 +22,7 @@ val log = Logger.getLogger("YandexTileServiceImpl")
 @Service
 class YandexTileServiceImpl(
     val tileIdMercator: TileIdMercator,
-    val geoMathService: GeoMathService,
+    val distance: Distance,
     val markService: MarksService,
 ) : YandexTileService {
     private val radius = 128
@@ -39,7 +39,7 @@ class YandexTileServiceImpl(
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y.toDouble(), z)),
             tileIdMercator.getPointByTileId(TileId(x.toDouble(), y + 1.0, z)),
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y + 1.0, z))
-        ).maxOfOrNull { geoMathService.distance().distance(it, center) }!! * 2.0
+        ).maxOfOrNull { distance.distance(it, center) }!! * 2.0
         println("lat: ${center.lat}, lng: ${center.lng}")
         val points = markService.getMarks(center.lat, center.lng, maxDistance.toLong())
             .map {

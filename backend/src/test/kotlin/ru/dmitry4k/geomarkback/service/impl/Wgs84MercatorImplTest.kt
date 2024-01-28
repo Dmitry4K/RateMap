@@ -7,6 +7,7 @@ import kotlin.math.abs
 
 class Wgs84MercatorImplTest {
     private val mercator = Wgs84MercatorImpl()
+    private val distance = Wgs84DistanceImpl()
 
     @Test
     fun mappingTest() {
@@ -28,5 +29,12 @@ class Wgs84MercatorImplTest {
             Assertions.assertTrue(abs(it.first.lat - it.second.lat) < epsilon)
             Assertions.assertTrue(abs(it.first.lng - it.second.lng) < epsilon)
         }
+    }
+
+    @Test
+    fun distanceTest() {
+        val a = GeoPoint(55.7520233, 37.6174994)
+        val b = GeoPoint(52.6031000, 39.5708000)
+        Assertions.assertEquals(372947, distance.distance(a, b).toLong())
     }
 }

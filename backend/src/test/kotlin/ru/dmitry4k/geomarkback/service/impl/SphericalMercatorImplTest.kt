@@ -8,7 +8,7 @@ import kotlin.math.abs
 
 class SphericalMercatorImplTest {
     private val mercator = SphericalMercatorImpl()
-    private val distance = SphericalDistanceImpl(SphericalMercatorImpl.RADIUS_MAJOR)
+    private val distance = SphericalDistanceImpl()
 
     @Test
     fun mappingTest() {
@@ -36,6 +36,6 @@ class SphericalMercatorImplTest {
     fun distanceTest() {
         val a = GeoPoint(55.7520233, 37.6174994)
         val b = GeoPoint(52.6031000, 39.5708000)
-        assertEquals(372923, distance.distance(a, b))
+        assertEquals(372923, distance.distance(a, b).toInt())
     }
 }

@@ -1,6 +1,7 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Component
+import ru.dmitry4k.geomarkback.dto.Constansts.Companion.RADIUS_MAJOR
 import ru.dmitry4k.geomarkback.service.AbstractMercator
 import kotlin.math.atan
 import kotlin.math.exp
@@ -24,10 +25,9 @@ class SphericalMercatorImpl : AbstractMercator(TOP, BOTTOM, LEFT, RIGHT) {
     }
 
     companion object {
-        const val RADIUS_MAJOR = 6378137.0
-        const val TOP = 23810769.32
-        const val BOTTOM = -23810769.32
-        const val LEFT = -20037508.34
-        const val RIGHT = 20037508.34
+        private const val TOP = 23810769.32
+        private const val BOTTOM = -23810769.32
+        private const val LEFT = -20037508.34
+        private const val RIGHT = 20037508.34
     }
 }
