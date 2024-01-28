@@ -7,7 +7,7 @@ import ru.dmitry4k.geomarkback.dto.TileId
 import kotlin.math.abs
 
 class TileIdMercatorImplTest {
-    private val tileIdMercator = TileIdMercatorImpl(SphericalMercatorImpl())
+    private val tileIdMercator = TileIdMercatorImpl(Wgs84MercatorImpl())
 
     @Test
     fun mercatorTest() {

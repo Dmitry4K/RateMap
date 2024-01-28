@@ -38,11 +38,11 @@ class Wgs84MercatorImpl : AbstractMercator(TOP, BOTTOM, LEFT, RIGHT) {
     companion object {
         private val ECCENT = sqrt(1 - (RADIUS_MINOR / RADIUS_MAJOR).pow(2.0))
         private val ECCNTH = ECCENT * 0.5
-        private const val MAX_LAT = 89.5;
+        private const val MAX_LAT = 85.0
         private const val EPS = 0.000000001
         private const val MAX_STEPS_COUNT = 15
-        private const val TOP = 34619289.37
-        private const val BOTTOM = -34619289.37
+        private const val TOP = 20037508.36
+        private const val BOTTOM = -20037508.36
         private const val LEFT = -20037508.34
         private const val RIGHT = 20037508.34
     }

@@ -8,6 +8,7 @@ import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.TileIdMercator
 import ru.dmitry4k.geomarkback.service.YandexTileService
 import java.awt.Color
+import java.awt.Font
 import java.awt.image.BufferedImage
 import java.awt.image.BufferedImage.TYPE_INT_ARGB
 import java.io.ByteArrayOutputStream
@@ -27,7 +28,7 @@ class YandexTileServiceImpl(
 ) : YandexTileService {
     private val radius = 128
     private val size = 256
-    private val alphaFloat = 0.3
+    private val alphaFloat = 0.7
     private val alphaInt = (alphaFloat * 256).toInt()
     private val minColor = Color(Color.RED.red, Color.RED.green, Color.RED.blue, alphaInt)
     private val maxColor = Color(Color.GREEN.red, Color.GREEN.green, Color.GREEN.blue, alphaInt)
@@ -39,7 +40,7 @@ class YandexTileServiceImpl(
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y.toDouble(), z)),
             tileIdMercator.getPointByTileId(TileId(x.toDouble(), y + 1.0, z)),
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y + 1.0, z))
-        ).maxOfOrNull { distance.distance(it, center) }!! * 2.0
+        ).maxOfOrNull { distance.distance(it, center) }!! * 3.0
         println("lat: ${center.lat}, lng: ${center.lng}")
         val points = markService.getMarks(center.lat, center.lng, maxDistance.toLong())
             .map {
@@ -47,21 +48,17 @@ class YandexTileServiceImpl(
                 val tileId = tileIdMercator.getTileIdByPoint(geoPoint, z)
 
                 XYZDoublePoint(
-                    (size * getFractionalPart(tileId.x)).toInt(),
-                    (size * getFractionalPart(tileId.y)).toInt(),
+                    (size * (tileId.x - x.toDouble())).toInt(),
+                    (size * (tileId.y - y.toDouble())).toInt(),
                     it.mark!! / 5.0
                 )
             }
-        return renderTile(points)
-    }
-
-    private fun getFractionalPart(a: Double): Double {
-        return a - a.toInt().toDouble()
+        return renderTile(points, x, y, z)
     }
     data class XYZDoublePoint(val x: Int, val y: Int, val z: Double)
     data class XYColor(val x: Int, val y: Int, val color: Color)
 
-    private fun renderTile(points: List<XYZDoublePoint>): ByteArray {
+    private fun renderTile(points: List<XYZDoublePoint>, x: Int, y: Int, z: Int): ByteArray {
         val pointsAndColors = points.map { XYColor(it.x ,it.y, getColor(it.z, minColor, maxColor)) }
         val bufferedImage = BufferedImage(size, size, TYPE_INT_ARGB)
         for (x in 0 until size) {
@@ -100,6 +97,8 @@ class YandexTileServiceImpl(
                 bufferedImage.setRGB(x, y, Color.BLACK.rgb)
             }
         }
+        bufferedImage.graphics.font = Font("TimesRoman", Font.PLAIN, 20)
+        bufferedImage.graphics.drawString("$x $y $z", 10, 10)
         ImageIO.write(bufferedImage, "png", baos)
         return baos.toByteArray()
     }

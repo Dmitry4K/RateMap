@@ -13,7 +13,7 @@ import kotlin.math.*
 class Wgs84DistanceImpl : Distance {
     override fun distance(a: GeoPoint, b: GeoPoint): Double {
         val eps = 0.000001
-        val f = 1.0 / 298.257223563;
+        val f = 1.0 / 298.257223563
         val l = Math.toRadians(b.lng - a.lng)
         val u1 = atan((1.0 - f) * tan(Math.toRadians(a.lat)))
         val u2 = atan((1.0 - f) * tan(Math.toRadians(b.lat)))

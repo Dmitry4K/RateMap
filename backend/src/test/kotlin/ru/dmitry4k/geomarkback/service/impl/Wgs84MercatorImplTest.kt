@@ -32,6 +32,13 @@ class Wgs84MercatorImplTest {
     }
 
     @Test
+    fun mercatorTest() {
+        val geoPoint = GeoPoint(85.085, 40.0)
+        val xy = mercator.pointToXY(geoPoint)
+        println(xy.y)
+    }
+
+    @Test
     fun distanceTest() {
         val a = GeoPoint(55.7520233, 37.6174994)
         val b = GeoPoint(52.6031000, 39.5708000)

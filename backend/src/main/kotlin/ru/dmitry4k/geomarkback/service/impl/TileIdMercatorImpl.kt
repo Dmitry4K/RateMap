@@ -22,7 +22,7 @@ class TileIdMercatorImpl(
         val tilesCount = getTileCount(tileId.z)
         val xy = XYPoint(
             normalize(tileId.x, tilesCount.toDouble(), xAxis) - xAxis / 2.0,
-            normalize(tilesCount - 1 - tileId.y, tilesCount.toDouble(), yAxis) - yAxis / 2.0
+            normalize(tilesCount - tileId.y, tilesCount.toDouble(), yAxis) - yAxis / 2.0
         )
         return mercator.xyToPoint(xy)
     }
@@ -36,7 +36,7 @@ class TileIdMercatorImpl(
         val tilesCount = getTileCount(z)
         return TileId(
             normalize(xy.x + xAxis / 2.0, xAxis, tilesCount.toDouble()),
-            tilesCount - 1 - normalize(xy.y + yAxis / 2.0, yAxis, tilesCount.toDouble()),
+            normalize(yAxis / 2.0 - xy.y, yAxis, tilesCount.toDouble()),
             z
         )
     }
