@@ -29,6 +29,6 @@ class RateMapMongoProviderImpl(
     }
 
     override fun saveOrUpdate(point: GeoPointDao) {
-        mongoTemplate.save(point)
+        mongoTemplate.save(point, tableName)
     }
 }

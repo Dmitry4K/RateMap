@@ -18,7 +18,7 @@ class YandexTileProviderImpl(
     private val tileRenderer = YandexTileRendererImpl()
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
-        println("lat: ${center.lat}, lng: ${center.lng}")
+        //println("lat: ${center.lat}, lng: ${center.lng}")
 
         val maxDistance = listOf(
             tileIdMercator.getPointByTileId(TileId(x.toDouble(), y.toDouble(), z)),
