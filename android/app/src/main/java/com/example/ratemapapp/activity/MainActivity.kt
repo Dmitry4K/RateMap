@@ -33,6 +33,14 @@ class MainActivity : MapKitActivity() {
             null
         )
         mapView.map.addCameraListener(cameraListener)
+        mapView.map.addInputListener(inputListener)
+        l.invalidate("0.0.0")
+    }
+
+    private fun init() {
+        setContentView(R.layout.activity_main)
+        mapView = findViewById(R.id.mapView)
+        projection = Projections.getWgs84Mercator()
         l = mapView.map.addLayer(
             "mapkit_logo",
             "image/png",
@@ -41,14 +49,6 @@ class MainActivity : MapKitActivity() {
             imageUrlProvider,
             projection
         )
-        mapView.map.addInputListener(inputListener)
-        l.invalidate("0.0.0")
-    }
-
-    private fun init() {
-        setContentView(R.layout.activity_main)
-        mapView = findViewById(R.id.mapView)
-        inputListener = InputListenerImpl(this@MainActivity, mapView)
-        projection = Projections.getWgs84Mercator()
+        inputListener = InputListenerImpl(this@MainActivity, mapView, l)
     }
 }
