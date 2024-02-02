@@ -1,5 +1,6 @@
 package com.example.ratemapapp.map.listener
 
+import android.util.Log
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
@@ -17,6 +18,6 @@ class MaxZoomCameraListener(
                 null
             )
         }
-        //Log.i("Camera", p1.target.let { it.latitude.toString() + ' ' + it.longitude.toString()} )
+        Log.i("Camera", p1.target.let { it.latitude.toString() + ' ' + it.longitude.toString() + ' ' + p1.zoom} )
     }
 }

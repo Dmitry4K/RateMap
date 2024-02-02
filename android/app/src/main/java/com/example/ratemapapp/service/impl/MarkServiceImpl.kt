@@ -9,6 +9,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 
 private val BASE_URL = "http://10.0.2.2:8080/api/mark"
@@ -29,7 +31,9 @@ class MarkServiceImpl(
             .addHeader("Content-Type", "application/json")
             .put(requestBody)
             .build()
-        val client = OkHttpClient.Builder().build()
+        val client = OkHttpClient.Builder()
+            .callTimeout(Duration.of(1, ChronoUnit.SECONDS))
+            .build()
         return client.newCall(request)
     }
 }
