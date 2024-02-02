@@ -23,7 +23,7 @@ class InputListenerImpl(
             mapView,
             point,
             MarkService.default(),
-            map.cameraPosition.zoom.toLong(),
+            map.cameraPosition.zoom,
             layer
         )
         fragmentActivity.supportFragmentManager

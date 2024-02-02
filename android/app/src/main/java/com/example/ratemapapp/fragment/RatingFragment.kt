@@ -22,6 +22,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
+import kotlin.math.pow
 
 
 class RatingFragment(
@@ -30,7 +31,7 @@ class RatingFragment(
     private val mapView: MapView,
     private val point: Point,
     private val markService: MarkService,
-    private val zoom: Long,
+    private val zoom: Float,
     private val layer: Layer
 ) : Fragment() {
     private lateinit var view: View
@@ -39,6 +40,7 @@ class RatingFragment(
     private lateinit var closeButton: ImageButton
     private lateinit var textView: TextView
     private lateinit var rootLayout: ViewGroup
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         view = inflater.inflate(R.layout.rate_fragment, container, false)
         stars = view.findViewById(R.id.ratingBar)
@@ -61,7 +63,8 @@ class RatingFragment(
             }
         }
         sendButton.setOnClickListener {
-            markService.setMark(point.latitude, point.longitude, stars.rating.toDouble(), zoom).enqueue(callback)
+            val depth = getDepth(zoom)
+            markService.setMark(point.latitude, point.longitude, stars.rating.toDouble(), depth).enqueue(callback)
         }
         closeButton.setOnClickListener {
             close()
@@ -102,5 +105,9 @@ class RatingFragment(
             lat.toString().replace(',','.', true),
             lng.toString().replace(',','.', true)
         )
+    }
+
+    private fun getDepth(zoom: Float): Long {
+        return (7340855.913171174 / 1.5 / 2.0.pow(zoom - 1.0)).toLong()
     }
 }

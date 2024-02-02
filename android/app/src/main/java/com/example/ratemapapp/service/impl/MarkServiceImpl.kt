@@ -17,10 +17,9 @@ class MarkServiceImpl(
     private val objectMapper: ObjectMapper
 ) : MarkService {
     override fun setMark(lat: Double, lng: Double, mark: Double, depth: Long): Call {
-        val json = objectMapper.writeValueAsBytes(PostMarkRequestBody(
-            lat, lng, mark, depth
-        ))
-        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull();
+        val postMarkRequestBody = PostMarkRequestBody(lat, lng, mark, depth)
+        val json = objectMapper.writeValueAsBytes(postMarkRequestBody)
+        val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
         val requestBody = RequestBody.create(mediaType, json)
         val url = BASE_URL.toHttpUrl()
             .newBuilder()
