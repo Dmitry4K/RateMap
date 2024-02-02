@@ -8,28 +8,28 @@ import java.util.logging.Logger
 
 
 @Service
-class MarksServiceImpl(pointsProviders: List<RateMapPointProvider>): MarksService {
+class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksService {
     private val log = Logger.getLogger(MarksServiceImpl::class.java.name)
 
-    val sortedPointsServices: List<RateMapPointProvider> = pointsProviders.sortedBy { it.getSearchDistance() }
-
-    override fun saveMark(mark: Double, lat: Double, lng: Double, depth: Long) {
+    override fun saveMark(mark: Double, lat: Double, lng: Double, radius: Long) {
         //log.info("Saving rate with mark: $mark; lat: $lat; lng: $lng; depth: $depth;")
-        sortedPointsServices.filter { it.getSearchDistance() >= depth }
-            .forEach { it.findNear(lng, lat)
-                .take(3)
+        pointsProviders.filter { it.getSearchDistance() >= radius }
+            .sortedBy { it.getSearchDistance() }
+            .forEachIndexed { idx, provider -> provider.findNear(lng, lat)
+                .take(if (idx == 0) 3 else 1)
                 .forEach { point ->
                     point.mark = calculateNewMark(point.count!!, point.mark!!, mark)
                     point.count = point.count!! + 1
-                    it.saveOrUpdate(point)
+                    provider.saveOrUpdate(point)
                 }
             }
     }
 
-    override fun getMarks(lat: Double, lng: Double, depth: Long): MarksResult {
+    override fun getMarks(lat: Double, lng: Double, radius: Long): MarksResult {
+        val sortedPointsServices = pointsProviders.sortedBy { it.getSearchDistance() }
         var selectedPointService = sortedPointsServices.first()
         for (pointsService in sortedPointsServices) {
-            if (depth < pointsService.getSearchDistance()) break
+            if (radius < pointsService.getSearchDistance()) break
             selectedPointService = pointsService
         }
         return MarksResult(selectedPointService.findNear(lng, lat), selectedPointService.getSearchDistance())

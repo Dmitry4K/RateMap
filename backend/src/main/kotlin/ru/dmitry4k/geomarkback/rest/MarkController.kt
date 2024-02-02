@@ -14,12 +14,12 @@ class MarkController(
     @PutMapping
     fun putMark(@Valid @RequestBody request: PostMarkRequestBody) {
         with(request) {
-            marksService.saveMark(mark, lat, lng, depth)
+            marksService.saveMark(mark, lat, lng, radius)
         }
     }
 
     @GetMapping
-    fun getMarks(@RequestParam lat: Double, @RequestParam lng: Double, @RequestParam depth: Long): List<GeoPointDao> {
-        return marksService.getMarks(lat, lng, depth).points
+    fun getMarks(@RequestParam lat: Double, @RequestParam lng: Double, @RequestParam radius: Long): List<GeoPointDao> {
+        return marksService.getMarks(lat, lng, radius).points
     }
 }
