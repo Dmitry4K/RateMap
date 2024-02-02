@@ -1,11 +1,13 @@
 package com.example.ratemapapp.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.RatingBar
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.ratemapapp.R
@@ -33,37 +35,41 @@ class RatingFragment(
 ) : Fragment() {
     private lateinit var view: View
     private lateinit var stars: RatingBar
+    private lateinit var sendButton: Button
+    private lateinit var closeButton: ImageButton
+    private lateinit var textView: TextView
+    private lateinit var rootLayout: ViewGroup
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         view = inflater.inflate(R.layout.rate_fragment, container, false)
         stars = view.findViewById(R.id.ratingBar)
+        sendButton = view.findViewById(R.id.rateButton)
+        closeButton = view.findViewById(R.id.rateFragmentCloseButton)
+        textView = view.findViewById(R.id.rateFragmentTextViewPointHint)
+        rootLayout = view.findViewById(R.id.rateFragmentRootLayout)
         return view
     }
 
     override fun onStart() {
         super.onStart()
-        view.findViewById<Button>(R.id.rateButton).setOnClickListener {
-            val call = markService.setMark(point.latitude, point.longitude, stars.rating.toDouble(), zoom)
-            call.enqueue(object : Callback {
-                override fun onFailure(call: Call, e: IOException) {
-
-                    close()
-                }
-                override fun onResponse(call: Call, response: Response) {
-                    layer.clear()
-                    close()
-                }
-            })
+        val callback = object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                close()
+            }
+            override fun onResponse(call: Call, response: Response) {
+                layer.clear()
+                close()
+            }
         }
-        view.findViewById<ImageButton>(R.id.rateFragmentCloseButton).setOnClickListener {
+        sendButton.setOnClickListener {
+            markService.setMark(point.latitude, point.longitude, stars.rating.toDouble(), zoom).enqueue(callback)
+        }
+        closeButton.setOnClickListener {
             close()
         }
-        val p = placeMark.place(point).also { moveCamera(it) }
-        view.findViewById<TextView>(R.id.rateFragmentTextViewPointHint).text = resources.getString(
-            R.string.rate_point_hint_text,
-            p.latitude.toString().replace(',','.', true),
-            p.longitude.toString().replace(',','.', true)
-        )
-        view.findViewById<ViewGroup>(R.id.rateFragmentRootLayout).setOnClickListener { moveCamera(p) }
+        placeMark.place(point)
+            .also { moveCamera(it) }
+            .also { setHintText(it.latitude, it.longitude) }
+            .also { p -> rootLayout.setOnClickListener { moveCamera(p) } }
     }
 
     override fun onStop() {
@@ -88,5 +94,13 @@ class RatingFragment(
             )
             .remove(this)
             .commit()
+    }
+
+    private fun setHintText(lat: Double, lng: Double) {
+        textView.text = resources.getString(
+            R.string.rate_point_hint_text,
+            lat.toString().replace(',','.', true),
+            lng.toString().replace(',','.', true)
+        )
     }
 }
