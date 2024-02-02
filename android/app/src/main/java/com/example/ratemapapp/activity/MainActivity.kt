@@ -12,6 +12,7 @@ import com.yandex.mapkit.geometry.geo.Projection
 import com.yandex.mapkit.geometry.geo.Projections
 import com.yandex.mapkit.layers.Layer
 import com.yandex.mapkit.layers.LayerOptions
+import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.InputListener
 
@@ -22,7 +23,7 @@ class MainActivity : MapKitActivity() {
     private val imageUrlProvider = ImageUrlProviderImpl()
     private lateinit var inputListener: InputListener
     private val urlProvider = RateMapUrlProviderImpl()
-    private val cameraListener = MaxZoomCameraListener(MAX_ZOOM)
+    private lateinit var cameraListener: CameraListener
     private lateinit var projection: Projection
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,5 +51,6 @@ class MainActivity : MapKitActivity() {
             projection
         )
         inputListener = InputListenerImpl(this@MainActivity, mapView, l)
+        cameraListener = MaxZoomCameraListener(this@MainActivity, MAX_ZOOM)
     }
 }

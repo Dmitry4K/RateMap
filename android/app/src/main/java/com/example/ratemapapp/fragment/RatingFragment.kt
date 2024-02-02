@@ -1,6 +1,7 @@
 package com.example.ratemapapp.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,13 +27,13 @@ import kotlin.math.pow
 
 
 class RatingFragment(
+    var zoom: Float,
     private val fragmentActivity: FragmentActivity,
     private val placeMark: PlaceMark,
     private val mapView: MapView,
     private val point: Point,
     private val markService: MarkService,
-    private val zoom: Float,
-    private val layer: Layer
+    private val layer: Layer,
 ) : Fragment() {
     private lateinit var view: View
     private lateinit var stars: RatingBar
@@ -64,6 +65,7 @@ class RatingFragment(
         }
         sendButton.setOnClickListener {
             val depth = getDepth(zoom)
+            Log.i("i", zoom.toString())
             markService.setMark(point.latitude, point.longitude, stars.rating.toDouble(), depth).enqueue(callback)
         }
         closeButton.setOnClickListener {
@@ -109,5 +111,9 @@ class RatingFragment(
 
     private fun getDepth(zoom: Float): Long {
         return (7340855.913171174 / 1.5 / 2.0.pow(zoom - 1.0)).toLong()
+    }
+
+    companion object {
+        const val TAG = "RATING_FRAGMENT"
     }
 }

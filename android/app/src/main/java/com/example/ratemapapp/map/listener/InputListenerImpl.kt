@@ -18,18 +18,18 @@ class InputListenerImpl(
 ) : InputListener {
     override fun onMapTap(map: Map, point: Point) {
         val ratingFragment = RatingFragment(
+            map.cameraPosition.zoom,
             fragmentActivity,
             PlaceMarkImpl(map),
             mapView,
             point,
             MarkService.default(),
-            map.cameraPosition.zoom,
             layer
         )
         fragmentActivity.supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(androidx.appcompat.R.anim.abc_slide_in_bottom, androidx.appcompat.R.anim.abc_slide_out_bottom)
-            .replace(R.id.fragmentContainer, ratingFragment)
+            .replace(R.id.fragmentContainer, ratingFragment, RatingFragment.TAG)
             .commit()
     }
 
