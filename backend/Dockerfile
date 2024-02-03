@@ -1,4 +1,4 @@
-FROM openjdk:17-oracle
+FROM dmitry4k/ratemap:openjdk-17-oracle-cert
 
 COPY ./build/libs/*.jar /app.jar
 
