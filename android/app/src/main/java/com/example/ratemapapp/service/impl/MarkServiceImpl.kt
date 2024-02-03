@@ -1,5 +1,6 @@
 package com.example.ratemapapp.service.impl
 
+import com.example.ratemapapp.dto.Consts.RATEMAP_API_URL
 import com.example.ratemapapp.dto.PostMarkRequestBody
 import com.example.ratemapapp.service.MarkService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -13,7 +14,7 @@ import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 
-private val BASE_URL = "http://10.0.2.2:8080/api/mark"
+private const val BASE_URL = "$RATEMAP_API_URL/mark"
 
 class MarkServiceImpl(
     private val objectMapper: ObjectMapper
