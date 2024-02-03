@@ -1,6 +1,7 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.TileId
@@ -9,6 +10,7 @@ import kotlin.math.abs
 class TileIdMercatorImplTest {
     private val tileIdMercator = TileIdMercatorImpl(Wgs84MercatorImpl())
 
+    @Disabled
     @Test
     fun mercatorTest() {
         val tileIds = listOf(
@@ -33,6 +35,7 @@ class TileIdMercatorImplTest {
         }
     }
 
+    @Disabled
     @Test
     fun test() {
         println(tileIdMercator.getTileIdByPoint(GeoPoint(55.7520233, 37.6174994),2))

@@ -86,3 +86,16 @@ Rel_R(migrate, db, "Генерация точек карты","JDBC")
 Rel_D(back, redis, "Кеширование","TCP")
 @enduml
 ```
+
+
+Deploy
+```shell
+docker build --no-cache . -t dmitry4k/ratemap:backend-v*.*.*
+docker image push dmitry4k/ratemap:backend-v*.*.*
+kubectl apply -f balancer.yml 
+kubectl set image deployments/ratemap-backend ratemap-backend-container=docker.io/dmitry4k/ratemap:backend-v*.*.*
+kubectl set env deployments/ratemap-backend MONGO_URL=<url>
+kubectl exec -it <pod_name> -- env
+```
+
+./keytool.exe -importcert -alias mongo -file "C:\Users\Dmitry\.mongodb\root.crt" -keystore "C:\Users\Dmitry\.jdks\corretto-17.0.7\lib\security\cacerts"
