@@ -18,3 +18,12 @@ ratemap:
           lat: 55.755820
           lng: 37.617633
         radius: 50000 #meters
+
+cache:
+  connection:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    pass: ${REDIS_PASS}
+  collections:
+    yandex-tiles:
+      ttl: 600 # seconds

@@ -19,12 +19,16 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-cache")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("redis.clients:jedis")
+
 	implementation("org.springframework.data:spring-data-mongodb")
+
 	implementation("org.mongodb:mongodb-driver-sync")
 
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test:")
 	testImplementation("org.junit.jupiter:junit-jupiter-api:5.8.1")

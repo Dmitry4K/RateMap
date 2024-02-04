@@ -1,5 +1,6 @@
 package ru.dmitry4k.geomarkback.service.impl
 
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.TileId
@@ -16,6 +17,8 @@ class YandexTileProviderImpl(
     val markService: MarksService,
 ) : YandexTileProvider {
     private val tileRenderer = YandexTileRendererImpl()
+
+    @Cacheable(cacheNames = ["yandex-tiles"])
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
         //println("lat: ${center.lat}, lng: ${center.lng}")

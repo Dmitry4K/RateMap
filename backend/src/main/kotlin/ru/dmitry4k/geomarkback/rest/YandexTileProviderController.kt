@@ -12,7 +12,7 @@ import ru.dmitry4k.geomarkback.service.YandexTileProvider
 @RestController
 @RequestMapping("/api/tile/yandex/png")
 class YandexTileProviderController(
-    val tileRenderer: YandexTileProvider
+    val tileProvider: YandexTileProvider
 ) {
     @GetMapping
     fun getTileByTileId(
@@ -20,7 +20,7 @@ class YandexTileProviderController(
         @RequestParam y: Int,
         @RequestParam z: Int
     ): ResponseEntity<ByteArray> {
-        val tile = tileRenderer.getTile(x, y, z)
+        val tile = tileProvider.getTile(x, y, z)
         val headers = HttpHeaders()
         headers.set(HttpHeaders.CONTENT_TYPE, "image/png")
         return ResponseEntity.ok()
