@@ -5,7 +5,7 @@ import java.awt.Color
 import java.util.*
 
 class BorderModifier(
-    private val borderColor: Color = Color.BLACK
+    private val borderColor: Color
 ): TileModifier<Color, Color> {
     override fun modify(matrix: MutableList<MutableList<Color>>): MutableList<MutableList<Color>> {
         val xSize = matrix.size
