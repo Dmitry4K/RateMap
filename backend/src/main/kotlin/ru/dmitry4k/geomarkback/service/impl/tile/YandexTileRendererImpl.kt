@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.service.tile.TileModifier
 import ru.dmitry4k.geomarkback.service.tile.TileRenderer
+import ru.dmitry4k.geomarkback.service.tile.TileSettingsProvider
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
@@ -13,10 +14,12 @@ import kotlin.math.sqrt
 
 @Primary
 @Service
-class YandexTileRendererImpl2(
-    private val tileModifier: TileModifier<Double, Color>
+class YandexTileRendererImpl(
+    private val tileModifier: TileModifier<Double, Color>,
+    tileSettingsProvider: TileSettingsProvider
 ): TileRenderer {
-    private val size: Int = 512
+    private val size: Int = tileSettingsProvider.getTileSize()
+
     override fun renderTile(points: List<Point3D<Int, Int, Double>>, radius: Int): ByteArray {
         val doubles = MutableList(size) {
             MutableList(size) { 0.5 }

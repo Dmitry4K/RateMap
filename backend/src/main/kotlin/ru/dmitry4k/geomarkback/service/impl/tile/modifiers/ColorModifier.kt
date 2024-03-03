@@ -7,8 +7,7 @@ import kotlin.math.min
 
 class ColorModifier(
     private val minColor: Color,
-    private val maxColor: Color,
-    private val alpha: Int
+    private val maxColor: Color
 ): TileModifier<Double, Color> {
     private val defaultColor = getColor(0.5, minColor, maxColor)
 
@@ -33,6 +32,7 @@ class ColorModifier(
         val red = getColorInt(z, minColor.red, maxColor.red)
         val green = getColorInt(z, minColor.green, maxColor.green)
         val blue = getColorInt(z, minColor.blue, maxColor.blue)
+        val alpha = getColorInt(z, minColor.alpha, maxColor.alpha)
         return Color(red, green, blue, alpha)
     }
 

@@ -4,7 +4,9 @@ import ru.dmitry4k.geomarkback.service.tile.TileModifier
 import kotlin.math.max
 import kotlin.math.min
 
-class SquareDoubleTileValidator : TileModifier<Double, Double> {
+class SquareDoubleTileValidator(
+    private val size: Int
+) : TileModifier<Double, Double> {
     override fun modify(matrix: MutableList<MutableList<Double>>): MutableList<MutableList<Double>> {
         if (matrix.isEmpty()) {
             throw Exception("Bad X size of matrix")
@@ -12,8 +14,8 @@ class SquareDoubleTileValidator : TileModifier<Double, Double> {
         val xSize = matrix.size
         val ySize = matrix[0].size
 
-        if (xSize != ySize) {
-            throw Exception("X and Y sizes must be equal for border modifier")
+        if (xSize != size || ySize != size) {
+            throw Exception("X and Y sizes must be equal")
         }
 
         for (x in 0 until xSize) {
