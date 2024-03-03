@@ -3,6 +3,8 @@ package ru.dmitry4k.geomarkback.service.impl
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.service.impl.geo.Wgs84DistanceImpl
+import ru.dmitry4k.geomarkback.service.impl.geo.Wgs84MercatorImpl
 import kotlin.math.abs
 
 class Wgs84MercatorImplTest {

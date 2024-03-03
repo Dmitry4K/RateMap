@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.TileId
+import ru.dmitry4k.geomarkback.service.impl.geo.TileIdMercatorImpl
+import ru.dmitry4k.geomarkback.service.impl.geo.Wgs84MercatorImpl
 
 class TileIdMercatorTest {
     private val tileIdMercatorImpl = TileIdMercatorImpl(Wgs84MercatorImpl())

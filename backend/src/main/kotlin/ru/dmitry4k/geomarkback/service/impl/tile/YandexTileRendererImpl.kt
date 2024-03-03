@@ -1,10 +1,11 @@
-package ru.dmitry4k.geomarkback.service.impl
+package ru.dmitry4k.geomarkback.service.impl.tile
 
 import ru.dmitry4k.geomarkback.dto.Point3D
-import ru.dmitry4k.geomarkback.service.TileRenderer
+import ru.dmitry4k.geomarkback.service.tile.TileRenderer
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
+import java.util.logging.Logger
 import javax.imageio.ImageIO
 import kotlin.math.max
 import kotlin.math.min
@@ -76,5 +77,9 @@ class YandexTileRendererImpl: TileRenderer {
 
     private fun dist(x1: Int, y1: Int, x2: Int, y2: Int): Double {
         return sqrt(((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)).toDouble())
+    }
+
+    companion object {
+        private val log: Logger = Logger.getLogger("YandexTileRendererImpl")
     }
 }

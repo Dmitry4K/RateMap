@@ -1,8 +1,8 @@
-package ru.dmitry4k.geomarkback.service.impl
+package ru.dmitry4k.geomarkback.service.impl.geo
 
 import ru.dmitry4k.geomarkback.dto.Constansts.Companion.RADIUS_MAJOR
 import ru.dmitry4k.geomarkback.dto.GeoPoint
-import ru.dmitry4k.geomarkback.service.Distance
+import ru.dmitry4k.geomarkback.service.geo.Distance
 import kotlin.math.cos
 import kotlin.math.sqrt
 

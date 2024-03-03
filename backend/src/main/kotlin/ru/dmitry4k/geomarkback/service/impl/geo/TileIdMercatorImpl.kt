@@ -1,11 +1,11 @@
-package ru.dmitry4k.geomarkback.service.impl
+package ru.dmitry4k.geomarkback.service.impl.geo
 
 import org.springframework.stereotype.Component
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.TileId
 import ru.dmitry4k.geomarkback.dto.Point2D
-import ru.dmitry4k.geomarkback.service.Mercator
-import ru.dmitry4k.geomarkback.service.TileIdMercator
+import ru.dmitry4k.geomarkback.service.geo.Mercator
+import ru.dmitry4k.geomarkback.service.geo.TileIdMercator
 
 @Component
 class TileIdMercatorImpl(

@@ -1,8 +1,7 @@
-package ru.dmitry4k.geomarkback.service.impl
+package ru.dmitry4k.geomarkback.service.impl.geo
 
 import org.springframework.stereotype.Component
 import ru.dmitry4k.geomarkback.dto.Constansts.Companion.RADIUS_MAJOR
-import ru.dmitry4k.geomarkback.service.AbstractMercator
 import kotlin.math.atan
 import kotlin.math.exp
 import kotlin.math.ln

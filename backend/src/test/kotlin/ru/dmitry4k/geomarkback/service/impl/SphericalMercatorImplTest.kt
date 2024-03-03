@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.service.impl.geo.SphericalDistanceImpl
+import ru.dmitry4k.geomarkback.service.impl.geo.SphericalMercatorImpl
 import kotlin.math.abs
 
 class SphericalMercatorImplTest {

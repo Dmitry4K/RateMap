@@ -1,18 +1,15 @@
-package ru.dmitry4k.geomarkback.service.impl
+package ru.dmitry4k.geomarkback.service.impl.tile
 
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.dto.TileId
-import ru.dmitry4k.geomarkback.service.Distance
+import ru.dmitry4k.geomarkback.service.geo.Distance
 import ru.dmitry4k.geomarkback.service.MarksService
-import ru.dmitry4k.geomarkback.service.TileIdMercator
-import ru.dmitry4k.geomarkback.service.YandexTileProvider
-import java.util.logging.Logger
+import ru.dmitry4k.geomarkback.service.geo.TileIdMercator
+import ru.dmitry4k.geomarkback.service.tile.YandexTileProvider
 import kotlin.math.cos
-
-val log: Logger = Logger.getLogger("YandexTileServiceImpl")
 
 @Service
 class YandexTileProviderImpl(
@@ -21,7 +18,6 @@ class YandexTileProviderImpl(
     val markService: MarksService,
 ) : YandexTileProvider {
     private val tileRenderer = YandexTileRendererImpl()
-
     @Cacheable(cacheNames = ["yandex-tiles"])
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))

@@ -1,7 +1,8 @@
-package ru.dmitry4k.geomarkback.service
+package ru.dmitry4k.geomarkback.service.impl.geo
 
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.Point2D
+import ru.dmitry4k.geomarkback.service.geo.Mercator
 
 abstract class AbstractMercator(
     private val top: Double,
