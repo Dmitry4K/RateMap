@@ -10,43 +10,49 @@
 
 AddElementTag("microService", $shape=EightSidedShape(), $bgColor="CornflowerBlue", $fontColor="white", $legendText="microservice")
 AddElementTag("storage", $shape=RoundedBoxShape(), $bgColor="lightSkyBlue", $fontColor="white")
+AddRelTag("noReady", $lineStyle = DashedLine())
+AddElementTag("noReady", $bgColor="gray")
 
 Person(user1, "Пользователь")
-Person(user, "Пользователь")
 Person(user2, "Пользователь")
-
-System_Boundary(ext, "Открытые внешние системы для получения данных по районам") {
-       Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений")
-       Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений")
-       Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений")
-}
+Person(user3, "Пользователь")
 
 System_Boundary(app, "Приложение оценки районов города") {
-    System_Boundary(front, "Интерфейс приложения") {
-       Container(ios, "IOS", "IOS SDK", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "microService")
-       Container(web, "Web сервис", "JavaScript", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "microService")
-       Container(android, "Android", "Android SDK", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "microService")
+    System_Boundary(front, "Интерфейс приложения") {       
+        Container(android, "Android", "Android SDK", "Отображение рейтинговой карты города, проставление оценок районам")
+        Container(ios, "IOS", "IOS SDK", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "noReady")
+        Container(web, "Web сервис", "JavaScript", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "noReady")
+        Lay_R(android, ios)
+        Lay_R(ios, web)
     }
-    System_Boundary(server, "Серверная часть приложенрия") {
-        System_Boundary(k8s, "K8S") {
-            System_Boundary(java_deployment, "Java сервисы") {
-                Container(back1, "Java сервис", "Java(Kotlin)", "Rest сервисы", $tags = "microservice")
-                Container(back, "Java сервис", "Java(Kotlin)", "Rest сервисы", $tags = "microservice")
-                Container(back2, "Java сервис", "Java(Kotlin)", "Rest сервисы", $tags = "microservice")
-            }
-            System_Boundary(monogoDb_deployment, "MonogoDb экземпляры") {
-                ContainerDb(db1, "База данных", "MongoDB", "Хранение данных о об оценках районов", $tags = "storage")
-                ContainerDb(db, "База данных", "MongoDB", "Хранение данных о об оценках районов", $tags = "storage")
-                ContainerDb(db2, "База данных", "MongoDB", "Хранение данных о об оценках районов", $tags = "storage")
-            }
-        }
+    System_Boundary(back, "Серверная часть приложения") {   
+        Container(java, "Java сервис", "Java(Kotlin)", "Rest сервисы", $tags = "microservice")
+        ContainerDb(mongo, "База данных", "MongoDB", "Хранение данных о об оценках районов", $tags = "storage")
+        ContainerDb(redis, "База данных/Кеш", "Redis", "Хранение данных о об оценках районов", $tags = "storage")
+        Lay_L(java, mongo)
+        Lay_R(java, redis)
     }
 }
 
-Rel_D(user, web, "Получение информации о районах и их рейтингах, проставление оценки району")
-Rel_D(web, back, "Получение посчитанных оценок и передача проставленных оценок  на карте")
-Rel_D(back, db, "Передача данных для хранения")
-Rel_R(back, ext, "Получение данных о стоимости недвижомости","HTTP")
+System_Boundary(ext, "Внешние системы для получения данных по районам") {
+       Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений")
+       Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+       Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+       Lay_R(cian, domclick)
+       Lay_R(domclick, yandex)
+}
+Rel_D(user1, android, "Получение посчитанных оценок и передача проставленных оценок  на карте")
+Rel_D(user2, ios, "", $tags="noReady")
+Rel_D(user3, web, "", $tags="noReady")
+Rel_D(android, java, "Получение посчитанных оценок и передача проставленных оценок  на карте")
+Rel_D(ios, java, "", $tags="noReady")
+Rel_D(web, java, "", $tags="noReady")
+Rel_L(java, mongo, "Передача данных для хранения")
+Rel_R(java, redis, "Кеширование данных")
+Rel_D(java, cian, "Получение данных о стоимости недвижомости","HTTP", $tags="noReady")
+Rel_D(java, domclick, "","HTTP", $tags="noReady")
+Rel_D(java, yandex, "", $tags="noReady")
+
 @enduml
 ```
 
@@ -59,23 +65,22 @@ AddElementTag("storage", $shape=RoundedBoxShape(), $bgColor="lightSkyBlue", $fon
 
 Person(user, "Пользователь")
 
-System_Boundary(ext, "Открытые внешние системы для получения данных по районам") {
-       Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений")
-       Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений")
-       Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений")
-}
-
 System_Boundary(app, "Приложение оценки районов города") {
     System_Boundary(server, "Серверная часть приложенрия") {
         Container(redis, "Кеш", "Redis", "Хранение подсчитанной карты", $tags = "microservice")
         Container(migrate, "Генератор тепловой карты", "Redis", "Хранение подсчитанной карты", $tags = "microservice")
         Container(back, "Сервер", "Java(Kotlin), Spring", "Контроллеры для получения и выгрузки тепловых карт", $tags = "microservice")
         ContainerDb(db, "База данных", "MongoDB", "Хранение гео-данных", $tags = "storage")
-        
     }
     System_Boundary(front, "Интерфейс приложения") {
       Container(android, "Мобильное приложение", "Java(Kotlin), Android SDK, Yandex Map Kit", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "microService")
     }
+}
+
+System_Boundary(ext, "Открытые внешние системы для получения данных по районам", $tags = "noReady") {
+   Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+   Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+   Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
 }
 
 Rel_R(user, android, "Просмотр тепловых карт")
@@ -95,6 +100,9 @@ docker image push dmitry4k/ratemap:backend-v*.*.*
 kubectl apply -f balancer.yml 
 kubectl set image deployments/ratemap-backend ratemap-backend-container=docker.io/dmitry4k/ratemap:backend-v*.*.*
 kubectl set env deployments/ratemap-backend MONGO_URL=<url>
+kubectl set env deployments/ratemap-backend REDIS_PASS=<redis_pass>
+kubectl set env deployments/ratemap-backend REDIS_HOST=<redis_host>
+kubectl set env deployments/ratemap-backend REDIS_PORT=<redis_port>
 kubectl exec -it <pod_name> -- env
 ```
 

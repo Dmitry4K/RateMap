@@ -3,8 +3,12 @@ package ru.dmitry4k.geomarkback.service.impl
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.GeoPoint
+import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.dto.TileId
-import ru.dmitry4k.geomarkback.service.*
+import ru.dmitry4k.geomarkback.service.Distance
+import ru.dmitry4k.geomarkback.service.MarksService
+import ru.dmitry4k.geomarkback.service.TileIdMercator
+import ru.dmitry4k.geomarkback.service.YandexTileProvider
 import java.util.logging.Logger
 import kotlin.math.cos
 
@@ -33,11 +37,11 @@ class YandexTileProviderImpl(
         val searchDistance = maxDistance * 2.0
         val marksResult = markService.getMarks(center.lat, center.lng, searchDistance.toLong())
 
-        val tileSize = tileRenderer.size
+        val tileSize = tileRenderer.getTileSize()
         val points = marksResult.points.map {
             val geoPoint = GeoPoint(it.point!!.y, it.point!!.x)
             val tileId = tileIdMercator.getTileIdByPoint(geoPoint, z)
-            TileRenderer.XYZDoublePoint(
+            Point3D(
                 (tileSize * (tileId.x - x.toDouble())).toInt(),
                 (tileSize * (tileId.y - y.toDouble())).toInt(),
                 it.mark!! / 5.0

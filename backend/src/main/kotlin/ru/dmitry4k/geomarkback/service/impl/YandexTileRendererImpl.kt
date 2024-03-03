@@ -1,5 +1,6 @@
 package ru.dmitry4k.geomarkback.service.impl
 
+import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.service.TileRenderer
 import java.awt.Color
 import java.awt.image.BufferedImage
@@ -9,17 +10,16 @@ import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class YandexTileRendererImpl(
-    val size: Int = 256,
-    private val alphaFloat: Double = 0.7,
-    private val alphaInt: Int = (alphaFloat * 256).toInt(),
-    private val minColor: Color = Color(Color.RED.red, Color.RED.green, Color.RED.blue, alphaInt),
+class YandexTileRendererImpl: TileRenderer {
+    private val size: Int = 256
+    private val alphaFloat: Double = 0.7
+    private val alphaInt: Int = (alphaFloat * 256).toInt()
+    private val minColor: Color = Color(Color.RED.red, Color.RED.green, Color.RED.blue, alphaInt)
     private val maxColor: Color = Color(Color.GREEN.red, Color.GREEN.green, Color.GREEN.blue, alphaInt)
-) : TileRenderer {
     private val defaultColor = getColor(0.5, minColor, maxColor)
-    override fun renderTile(points: List<TileRenderer.XYZDoublePoint>, radius: Int): ByteArray {
+    override fun renderTile(points: List<Point3D<Int, Int, Double>>, radius: Int): ByteArray {
         val pointsAndColors = points.map {
-            TileRenderer.XYColor(
+            Point3D(
                 it.x,
                 it.y,
                 getColor(it.z, minColor, maxColor)
@@ -34,7 +34,7 @@ class YandexTileRendererImpl(
                 } else {
                     val sums = filteredPoints.map {
                         val k = 1 - dist(x, y, it.x, it.y) / radius.toDouble()
-                        listOf(k * it.color.red, k * it.color.green, k * it.color.blue, k)
+                        listOf(k * it.z.red, k * it.z.green, k * it.z.blue, k)
                     }
                         .reduce { a, i -> a.zip(i) { f, s -> f + s } }
                     val kSum = sums[3]
@@ -54,6 +54,8 @@ class YandexTileRendererImpl(
         ImageIO.write(bufferedImage, "png", output)
         return output.toByteArray()
     }
+
+    override fun getTileSize(): Int = size
 
     private fun getColor(z: Double, minColor: Color, maxColor: Color): Color {
         if (z < 0.0 || z > 1.0) {

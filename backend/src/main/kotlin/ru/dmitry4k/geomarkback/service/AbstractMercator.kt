@@ -1,7 +1,7 @@
 package ru.dmitry4k.geomarkback.service
 
 import ru.dmitry4k.geomarkback.dto.GeoPoint
-import ru.dmitry4k.geomarkback.dto.XYPoint
+import ru.dmitry4k.geomarkback.dto.Point2D
 
 abstract class AbstractMercator(
     private val top: Double,
@@ -10,10 +10,10 @@ abstract class AbstractMercator(
     private val right: Double
 ) : Mercator {
     override fun pointToXY(geoPoint: GeoPoint)= with(geoPoint) {
-        XYPoint(xAxisProjection(lng), yAxisProjection(lat))
+        Point2D(xAxisProjection(lng), yAxisProjection(lat))
     }
 
-    override fun xyToPoint(xyPoint: XYPoint) = with(xyPoint) {
+    override fun xyToPoint(point2D: Point2D<Double, Double>) = with(point2D) {
         GeoPoint(latAxisProjection(y), lngAxisProjection(x))
     }
 

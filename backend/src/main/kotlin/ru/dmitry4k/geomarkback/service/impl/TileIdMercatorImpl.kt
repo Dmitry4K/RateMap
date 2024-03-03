@@ -3,7 +3,7 @@ package ru.dmitry4k.geomarkback.service.impl
 import org.springframework.stereotype.Component
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.TileId
-import ru.dmitry4k.geomarkback.dto.XYPoint
+import ru.dmitry4k.geomarkback.dto.Point2D
 import ru.dmitry4k.geomarkback.service.Mercator
 import ru.dmitry4k.geomarkback.service.TileIdMercator
 
@@ -20,7 +20,7 @@ class TileIdMercatorImpl(
 
     override fun getPointByTileId(tileId: TileId): GeoPoint {
         val tilesCount = getTileCount(tileId.z)
-        val xy = XYPoint(
+        val xy = Point2D(
             normalize(tileId.x, tilesCount.toDouble(), xAxis) - xAxis / 2.0,
             normalize(tilesCount - tileId.y, tilesCount.toDouble(), yAxis) - yAxis / 2.0
         )
