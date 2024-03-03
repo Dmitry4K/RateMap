@@ -5,9 +5,10 @@ import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.dto.TileId
-import ru.dmitry4k.geomarkback.service.geo.Distance
 import ru.dmitry4k.geomarkback.service.MarksService
+import ru.dmitry4k.geomarkback.service.geo.Distance
 import ru.dmitry4k.geomarkback.service.geo.TileIdMercator
+import ru.dmitry4k.geomarkback.service.tile.TileRenderer
 import ru.dmitry4k.geomarkback.service.tile.YandexTileProvider
 import kotlin.math.cos
 
@@ -16,8 +17,9 @@ class YandexTileProviderImpl(
     val tileIdMercator: TileIdMercator,
     val distance: Distance,
     val markService: MarksService,
+    val tileRenderer: TileRenderer
 ) : YandexTileProvider {
-    private val tileRenderer = YandexTileRendererImpl()
+
     @Cacheable(cacheNames = ["yandex-tiles"])
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
