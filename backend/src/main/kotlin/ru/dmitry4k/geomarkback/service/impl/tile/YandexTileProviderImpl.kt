@@ -30,7 +30,7 @@ class YandexTileProviderImpl(
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y.toDouble(), z)),
             tileIdMercator.getPointByTileId(TileId(x.toDouble(), y + 1.0, z)),
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y + 1.0, z))
-        ).maxOfOrNull { distance.distance(it, center) }!!
+        ).maxOf { distance.distance(it, center) }
 
         val searchDistance = maxDistance * 2.0
         val marksResult = markService.getMarks(center.lat, center.lng, searchDistance.toLong())
