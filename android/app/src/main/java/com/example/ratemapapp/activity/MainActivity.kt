@@ -50,6 +50,7 @@ class MainActivity : MapKitActivity() {
             imageUrlProvider,
             projection
         )
+        mapView.map.set2DMode(true)
         inputListener = InputListenerImpl(this@MainActivity, mapView, l)
         cameraListener = MaxZoomCameraListener(this@MainActivity, MAX_ZOOM)
     }
