@@ -64,7 +64,8 @@ request_body = '''{{
 
 
 def get_body(top_left, bottom_right, price, area):
-    return request_body.format(bottom_right[0], bottom_right[1], top_left[0], top_left[1], price[1], price[0], area[1], area[0])
+    return request_body.format(bottom_right[0], bottom_right[1], top_left[0], top_left[1], price[1], price[0], area[1],
+                               area[0])
 
 
 def try_request(top_left, bottom_right, price, area):
@@ -95,6 +96,7 @@ def save_response(response, area, file):
         except Exception as e:
             print(e)
 
+
 def request(top_left, bottom_right, file, price, area):
     attempt = 0
     while True:
@@ -102,11 +104,12 @@ def request(top_left, bottom_right, file, price, area):
         response = try_request(top_left, bottom_right, price, area)
         if response:
             save_response(response, area, file)
-            print(f"Successfully for:", top_left, bottom_right, price, area)
             time.sleep(5)
+            print(f"Successfully for:", top_left, bottom_right, price, area)
             break
 
-        print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price, area)
+        print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price,
+              area)
         sleep_time_secs = 60 * attempt
         print(f"Sleeping {sleep_time_secs} secs")
         time.sleep(sleep_time_secs)
@@ -124,19 +127,21 @@ def main():
     grid_size = 7
     step_left = (top_left[0] - bottom_right[0]) / grid_size
     step_bottom = abs((top_left[1] - bottom_right[1]) / grid_size)
+    iterations_count = grid_size * grid_size * price_count * area_count
     with open("cian_export.json", 'w') as file:
         file.write('[\n')
         for i in range(grid_size):
             for j in range(grid_size):
                 for p in range(price_count):
                     for a in range(area_count):
+                        iteration = (i + 1) * (j + 1) * (p + 1) * (a + 1)
                         int_top_left = (top_left[0] - step_left * i, top_left[1] + step_bottom * j)
                         int_bottom_right = (top_left[0] - step_left * (i + 1), top_left[1] + step_bottom * (j + 1))
                         price_lte = 999_999_999 if (p == price_count - 1) else price_range[0] + price_step * (p + 1)
                         price_gte = price_range[0] + price_step * p
                         price = (price_gte, price_lte)
                         area = (area_range[0] + area_step * a, area_range[0] + area_step * (a + 1))
-                        # print(area)
+                        print(f"Progress {iteration * 100 // iterations_count}% ({iteration} / {iterations_count})")
                         request(int_top_left, int_bottom_right, file, price, area)
 
         file.write(']\n')
