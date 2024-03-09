@@ -67,36 +67,49 @@ def get_body(top_left, bottom_right, price, area):
     return request_body.format(bottom_right[0], bottom_right[1], top_left[0], top_left[1], price[1], price[0], area[1], area[0])
 
 
-def request(top_left, bottom_right, file, price, area):
-    response = requests.post(
+def try_request(top_left, bottom_right, price, area):
+    return requests.post(
         url=url,
         data=get_body(top_left, bottom_right, price, area)
     )
-    if response:
-        resp = response.json()
-        for row in resp['filtered']:
-            try:
-                result = {
-                    'lat': row['coordinates']['lat'],
-                    'lng': row['coordinates']['lng'],
-                    'minPrice': row['minPrice'],
-                    'maxPrice': row['maxPrice'],
-                    'count': row['count'],
-                    'avgPrice': (row['minPrice'] + row['maxPrice']) / 2,
-                    'minArea': area[0],
-                    'maxArea': area[1],
-                    'avgArea': (area[1] + area[0]) / 2,
-                    'exportTime': datetime.datetime.now().isoformat()
-                }
-                json.dump(result, file)
-                file.write(',\n')
-                print(result)
-            except Exception as e:
-                print(e)
-        print(f"Successfully for:", top_left, bottom_right, price, area)
-        time.sleep(7)
-    else:
-        print(f"ERROR for {response.reason}")
+
+
+def save_response(response, area, file):
+    for row in response.json()['filtered']:
+        try:
+            result = {
+                'lat': row['coordinates']['lat'],
+                'lng': row['coordinates']['lng'],
+                'minPrice': row['minPrice'],
+                'maxPrice': row['maxPrice'],
+                'count': row['count'],
+                'avgPrice': (row['minPrice'] + row['maxPrice']) / 2,
+                'minArea': area[0],
+                'maxArea': area[1],
+                'avgArea': (area[1] + area[0]) / 2,
+                'exportTime': datetime.datetime.now().isoformat()
+            }
+            json.dump(result, file)
+            file.write(',\n')
+            print(result)
+        except Exception as e:
+            print(e)
+
+def request(top_left, bottom_right, file, price, area):
+    attempt = 0
+    while True:
+        attempt += 1
+        response = try_request(top_left, bottom_right, price, area)
+        if response:
+            save_response(response, area, file)
+            print(f"Successfully for:", top_left, bottom_right, price, area)
+            time.sleep(5)
+            break
+
+        print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price, area)
+        sleep_time_secs = 60 * attempt
+        print(f"Sleeping {sleep_time_secs} secs")
+        time.sleep(sleep_time_secs)
 
 
 def main():
