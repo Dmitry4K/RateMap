@@ -128,13 +128,14 @@ def main():
     step_left = (top_left[0] - bottom_right[0]) / grid_size
     step_bottom = abs((top_left[1] - bottom_right[1]) / grid_size)
     iterations_count = grid_size * grid_size * price_count * area_count
+    iteration = 0
     with open("cian_export.json", 'w') as file:
         file.write('[\n')
         for i in range(grid_size):
             for j in range(grid_size):
                 for p in range(price_count):
                     for a in range(area_count):
-                        iteration = (i + 1) * (j + 1) * (p + 1) * (a + 1)
+                        iteration += 1
                         int_top_left = (top_left[0] - step_left * i, top_left[1] + step_bottom * j)
                         int_bottom_right = (top_left[0] - step_left * (i + 1), top_left[1] + step_bottom * (j + 1))
                         price_lte = 999_999_999 if (p == price_count - 1) else price_range[0] + price_step * (p + 1)
