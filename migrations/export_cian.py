@@ -88,6 +88,7 @@ def save_response(response, area, file):
                 'minArea': area[0],
                 'maxArea': area[1],
                 'avgArea': (area[1] + area[0]) / 2,
+                'avgPriceForMeter': ((row['minPrice'] + row['maxPrice']) / 2) / ((area[1] + area[0]) / 2),
                 'exportTime': datetime.datetime.now().isoformat()
             }
             json.dump(result, file)
