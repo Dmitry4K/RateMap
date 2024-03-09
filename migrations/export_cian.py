@@ -127,6 +127,9 @@ def main():
     price_range = (5_000_000, 50_000_000)
     price_step = 5_000_000
     area_range = (80, 120)
+    # area_range = (20, 50)
+    # area_range = (50, 80)
+
     area_step = 10
     price_count = (price_range[1] - price_range[0]) // price_step + 1
     area_count = (area_range[1] - area_range[0]) // area_step
