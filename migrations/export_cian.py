@@ -102,18 +102,23 @@ def request(top_left, bottom_right, file, price, area):
     attempt = 0
     while True:
         attempt += 1
-        response = try_request(top_left, bottom_right, price, area)
-        if response:
-            save_response(response, area, file)
-            time.sleep(5)
-            print(f"Successfully for:", top_left, bottom_right, price, area)
-            break
+        try:
+            response = try_request(top_left, bottom_right, price, area)
+            if response:
+                save_response(response, area, file)
+                time.sleep(5)
+                print(f"Successfully for:", top_left, bottom_right, price, area)
+                break
+            print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price,
+                  area)
+        except Exception as e:
+            print(f"ERROR on attempt: {attempt} with exception: {e} for:", top_left, bottom_right, price,
+                  area)
 
-        print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price,
-              area)
         sleep_time_secs = 60 * attempt
         print(f"Sleeping {sleep_time_secs} secs")
         time.sleep(sleep_time_secs)
+
 
 
 def main():
@@ -121,7 +126,7 @@ def main():
     bottom_right = (55.571756200146616, 37.83000158182825)
     price_range = (5_000_000, 50_000_000)
     price_step = 5_000_000
-    area_range = (20, 120)
+    area_range = (80, 120)
     area_step = 10
     price_count = (price_range[1] - price_range[0]) // price_step + 1
     area_count = (area_range[1] - area_range[0]) // area_step
