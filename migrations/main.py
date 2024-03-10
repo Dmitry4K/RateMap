@@ -186,12 +186,12 @@ def load(client: MongoClient[Mapping[str, Any]], pts, table_name):
         {
             "rates": {
                 "mark": {
-                    "value": 2.5,
-                    "count": 0.0,
+                    "value": 0.0,
+                    "count": 0,
                 },
                 "avgMeterPrice": {
-                    "value": -1.0,
-                    "count": 0.0
+                    "value": 0.0,
+                    "count": 0
                 }
             },
             "point": {
