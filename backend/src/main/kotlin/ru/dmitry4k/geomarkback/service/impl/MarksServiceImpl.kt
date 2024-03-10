@@ -6,15 +6,11 @@ import ru.dmitry4k.geomarkback.dto.MarksResult
 import ru.dmitry4k.geomarkback.extension.merge
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.RateMapPointProvider
-import java.util.logging.Logger
 
 
 @Service
 class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksService {
-    private val log = Logger.getLogger(MarksServiceImpl::class.java.name)
-
     override fun saveMark(mark: Double, lat: Double, lng: Double, radius: Long) {
-        //log.info("Saving rate with mark: $mark; lat: $lat; lng: $lng; depth: $depth;")
         pointsProviders
             .filter { it.getSearchDistance() >= radius }
             .sortedBy { it.getSearchDistance() }

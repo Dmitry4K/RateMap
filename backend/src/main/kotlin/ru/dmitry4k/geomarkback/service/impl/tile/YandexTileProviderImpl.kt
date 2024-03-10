@@ -42,7 +42,7 @@ class YandexTileProviderImpl(
             Point3D(
                 (tileSize * (tileId.x - x.toDouble())).toInt(),
                 (tileSize * (tileId.y - y.toDouble())).toInt(),
-                it.rates.mark.value / 5.0
+                if (it.rates.mark.count == 0L) 2.5 else it.rates.mark.value / 5.0
             )
         }
         val radius = marksResult.distance.toDouble() * tileSize.toDouble() / maxDistance / cos(45.0) / 1.5
