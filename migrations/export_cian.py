@@ -126,7 +126,7 @@ def main():
     bottom_right = (55.571756200146616, 37.83000158182825)
     price_range = (5_000_000, 50_000_000)
     price_step = 5_000_000
-    area_range = (80, 120)
+    area_range = (90, 110)
     # area_range = (20, 50)
     # area_range = (50, 80)
 
