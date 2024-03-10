@@ -1,8 +1,9 @@
 package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
+import ru.dmitry4k.geomarkback.dto.AvgValue
 import ru.dmitry4k.geomarkback.dto.MarksResult
-import ru.dmitry4k.geomarkback.extension.updateMark
+import ru.dmitry4k.geomarkback.extension.merge
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.RateMapPointProvider
 import java.util.logging.Logger
@@ -19,7 +20,9 @@ class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksSe
             .sortedBy { it.getSearchDistance() }
             .forEachIndexed { idx, provider -> provider.findNear(lng, lat)
                 .take(if (idx == 0) 3 else 1)
-                .forEach { point ->  provider.saveOrUpdate(point.also { it.updateMark(mark) }) }
+                .forEach { point ->  provider.saveOrUpdate(point.also {
+                    it.rates.mark.merge(AvgValue(mark, 1))
+                }) }
             }
     }
 

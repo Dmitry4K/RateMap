@@ -37,12 +37,12 @@ class YandexTileProviderImpl(
 
         val tileSize = tileRenderer.getTileSize()
         val points = marksResult.points.map {
-            val geoPoint = GeoPoint(it.point!!.y, it.point!!.x)
+            val geoPoint = GeoPoint(it.point.y, it.point.x)
             val tileId = tileIdMercator.getTileIdByPoint(geoPoint, z)
             Point3D(
                 (tileSize * (tileId.x - x.toDouble())).toInt(),
                 (tileSize * (tileId.y - y.toDouble())).toInt(),
-                it.mark!! / 5.0
+                it.rates.mark.value / 5.0
             )
         }
         val radius = marksResult.distance.toDouble() * tileSize.toDouble() / maxDistance / cos(45.0) / 1.5
