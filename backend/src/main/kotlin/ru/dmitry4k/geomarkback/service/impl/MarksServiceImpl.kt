@@ -2,6 +2,7 @@ package ru.dmitry4k.geomarkback.service.impl
 
 import org.springframework.stereotype.Service
 import ru.dmitry4k.geomarkback.dto.AvgValue
+import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.MarksResult
 import ru.dmitry4k.geomarkback.extension.merge
 import ru.dmitry4k.geomarkback.service.MarksService
@@ -26,4 +27,13 @@ class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksSe
         .sortedByDescending { it.getSearchDistance() }
         .firstOrNull { it.getSearchDistance() <= radius } ?: pointsProviders.last())
         .let { MarksResult(it.findNear(lng, lat), it.getSearchDistance()) }
+
+    override fun saveAvgMeterPrice(point: GeoPoint, value: AvgValue) {
+        pointsProviders.map {
+            it.findNear(point.lng, point.lat)
+                .firstOrNull()
+                ?.also { point -> point.rates.avgMeterPrice.merge(value) }
+                ?.also { point -> it.saveOrUpdate(point) }
+        }
+    }
 }

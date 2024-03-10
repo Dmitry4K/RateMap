@@ -3,13 +3,16 @@ package ru.dmitry4k.geomarkback.rest
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import ru.dmitry4k.geomarkback.dto.PostAvgMetersPriceRequest
+import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.tile.YandexTileService
 
 
 @RestController
 @RequestMapping("/api/v1/layer")
-class YandexTileController(
-    val yandexTileService: YandexTileService
+class LayerController(
+    val yandexTileService: YandexTileService,
+    val marksService: MarksService
 ) {
     @GetMapping("/{layerName}/tile/yandex/png")
     fun getTileByTileId(
@@ -24,5 +27,10 @@ class YandexTileController(
         return ResponseEntity.ok()
             .headers(headers)
             .body(tile)
+    }
+
+    @PostMapping("/avgMetersPrice/set")
+    fun setAvgMeterPrice(@RequestBody request: PostAvgMetersPriceRequest) {
+        marksService.saveAvgMeterPrice(request.point, request.avgMeterPrice)
     }
 }
