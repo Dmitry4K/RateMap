@@ -1,6 +1,6 @@
-package ru.dmitry4k.geomarkback.service.impl.tile
+package ru.dmitry4k.geomarkback.service.impl.tile.providers
 
-import org.springframework.stereotype.Service
+import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.Point3D
 import ru.dmitry4k.geomarkback.dto.TileId
@@ -11,14 +11,12 @@ import ru.dmitry4k.geomarkback.service.tile.TileRenderer
 import ru.dmitry4k.geomarkback.service.tile.YandexTileProvider
 import kotlin.math.cos
 
-@Service
-class YandexTileProviderImpl(
-    val tileIdMercator: TileIdMercator,
-    val distance: Distance,
-    val markService: MarksService,
-    val tileRenderer: TileRenderer
-) : YandexTileProvider {
-
+abstract class AbstractAvgValueTileProvdier(
+    private val tileIdMercator: TileIdMercator,
+    private val distance: Distance,
+    private val markService: MarksService,
+    private val tileRenderer: TileRenderer
+): YandexTileProvider {
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
         //println("lat: ${center.lat}, lng: ${center.lng}")
@@ -40,7 +38,7 @@ class YandexTileProviderImpl(
             Point3D(
                 (tileSize * (tileId.x - x.toDouble())).toInt(),
                 (tileSize * (tileId.y - y.toDouble())).toInt(),
-                if (it.rates.mark.count == 0L) 0.5 else it.rates.mark.value / 5.0
+                norm(it)
             )
         }
         val radius = marksResult.distance.toDouble() * tileSize.toDouble() / maxDistance / cos(45.0) / 1.5
@@ -48,5 +46,13 @@ class YandexTileProviderImpl(
         return tileRenderer.renderTile(points, radius.toInt())
     }
 
-    override fun layerName() = "marks"
+    private fun norm(point: GeoPointDao): Double {
+        return (getValue(point) - getMinValue()) / (getMaxValue() - getMinValue())
+    }
+
+    abstract fun getValue(point: GeoPointDao): Double
+
+    abstract fun getMaxValue(): Double
+
+    abstract fun getMinValue(): Double
 }
