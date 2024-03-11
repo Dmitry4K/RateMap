@@ -4,8 +4,7 @@ import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 
 interface RateMapPointProvider {
     fun getArea(): String
-    fun getSearchDistance(): Long
-    fun findNear(lng: Double, lat: Double): List<GeoPointDao>
-
+    fun getAverageDistanceBetweenPoints(): Long
+    fun findNearsOrClosest(lng: Double, lat: Double, radius: Long): List<GeoPointDao>
     fun saveOrUpdate(point: GeoPointDao)
 }

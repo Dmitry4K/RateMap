@@ -15,7 +15,7 @@ class AvgMeterPriceProviderImpl(
     tileRenderer: TileRenderer,
 ): AbstractAvgValueTileProvdier(tileIdMercator, distance, markService, tileRenderer) {
     override fun getValue(point: GeoPointDao): Double = with(point.rates.avgMeterPrice) {
-        if (count == 0L) 0.0 else value
+        if (count == 0L) (getMaxValue() + getMinValue()) / 2.0 else value
     }
 
     override fun getMaxValue(): Double = 1000000.0 // 3462086.9565217393

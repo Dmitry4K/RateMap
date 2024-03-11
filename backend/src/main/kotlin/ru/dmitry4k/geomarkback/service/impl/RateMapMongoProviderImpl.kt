@@ -14,14 +14,13 @@ class RateMapMongoProviderImpl(
     private val mongoTemplate: MongoTemplate
 ): RateMapPointProvider {
     override fun getArea() = area
-    override fun getSearchDistance() = distance
-    override fun findNear(lng: Double, lat: Double): List<GeoPointDao> {
-        val maxDistance = distance * 4.0
+    override fun getAverageDistanceBetweenPoints() = distance
+    override fun findNearsOrClosest(lng: Double, lat: Double, radius: Long): List<GeoPointDao> {
         val query = BasicQuery(
             NEAR_QUERY.format(
                 lng.toString().replace(',', '.'),
                 lat.toString().replace(',', '.'),
-                maxDistance.toInt(),
+                ((if (radius < getAverageDistanceBetweenPoints()) getAverageDistanceBetweenPoints() else radius) * 1.2).toLong(),
                 0
             )
         )
