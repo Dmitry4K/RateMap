@@ -10,6 +10,8 @@ import ru.dmitry4k.geomarkback.service.geo.TileIdMercator
 import ru.dmitry4k.geomarkback.service.tile.TileRenderer
 import ru.dmitry4k.geomarkback.service.tile.YandexTileProvider
 import kotlin.math.cos
+import kotlin.math.max
+import kotlin.math.min
 
 abstract class AbstractAvgValueTileProvdier(
     private val tileIdMercator: TileIdMercator,
@@ -47,7 +49,7 @@ abstract class AbstractAvgValueTileProvdier(
     }
 
     private fun norm(point: GeoPointDao): Double {
-        return (getValue(point) - getMinValue()) / (getMaxValue() - getMinValue())
+        return max(0.0, min(1.0, (getValue(point) - getMinValue()) / (getMaxValue() - getMinValue())))
     }
 
     abstract fun getValue(point: GeoPointDao): Double
