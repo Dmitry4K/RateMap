@@ -1,30 +1,33 @@
 package com.example.ratemapapp.activity
 
 import android.os.Bundle
+import android.widget.Button
 import com.example.ratemapapp.R
+import com.example.ratemapapp.map.extension.setLayer
+import com.example.ratemapapp.map.layer.impl.AvgMeterPriceMapLayerImpl
+import com.example.ratemapapp.map.layer.impl.MarkRateMapLayerImpl
 import com.example.ratemapapp.map.listener.InputListenerImpl
 import com.example.ratemapapp.map.listener.MaxZoomCameraListener
-import com.example.ratemapapp.map.provider.ImageUrlProviderImpl
-import com.example.ratemapapp.map.provider.RateMapUrlProviderImpl
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.geometry.geo.Projection
-import com.yandex.mapkit.geometry.geo.Projections
 import com.yandex.mapkit.layers.Layer
-import com.yandex.mapkit.layers.LayerOptions
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
-import com.yandex.mapkit.map.InputListener
 
 private const val MAX_ZOOM = 12.0f
 
 class MainActivity : MapKitActivity() {
     private lateinit var l: Layer
-    private val imageUrlProvider = ImageUrlProviderImpl()
-    private lateinit var inputListener: InputListener
-    private val urlProvider = RateMapUrlProviderImpl()
+    private lateinit var inputListener: InputListenerImpl
     private lateinit var cameraListener: CameraListener
-    private lateinit var projection: Projection
+    private lateinit var refreshLayerButton: Button
+    private lateinit var onMarkLayerButton: Button
+    private lateinit var onAvgMeterPriceLayerButton: Button
+    private val rateMapLayers = listOf(
+        MarkRateMapLayerImpl(),
+        AvgMeterPriceMapLayerImpl()
+    ).associateBy { it.getName() }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
@@ -41,17 +44,28 @@ class MainActivity : MapKitActivity() {
     private fun init() {
         setContentView(R.layout.activity_main)
         mapView = findViewById(R.id.mapView)
-        projection = Projections.getWgs84Mercator()
-        l = mapView.map.addLayer(
-            "mapkit_logo",
-            "image/png",
-            LayerOptions(),
-            urlProvider,
-            imageUrlProvider,
-            projection
-        )
         mapView.map.set2DMode(true)
-        inputListener = InputListenerImpl(this@MainActivity, mapView, l)
-        cameraListener = MaxZoomCameraListener(this@MainActivity, MAX_ZOOM)
+        rateMapLayers.values.forEach { it.init() }
+        l = mapView.map.setLayer(rateMapLayers["marks"]!!)
+        inputListener = InputListenerImpl(this@MainActivity, mapView)
+        cameraListener = MaxZoomCameraListener(MAX_ZOOM)
+
+        refreshLayerButton = findViewById(R.id.layer_refresh_button)
+        onMarkLayerButton = findViewById(R.id.mark_layer_on_button)
+        onAvgMeterPriceLayerButton = findViewById(R.id.avg_meter_price_layer_on_button)
+
+        onMarkLayerButton.isClickable = false
+
+        refreshLayerButton.setOnClickListener { l.clear() }
+        onMarkLayerButton.setOnClickListener {
+            l.remove()
+            l = mapView.map.setLayer(rateMapLayers["marks"]!!)
+            l.invalidate("0.0.0")
+        }
+        onAvgMeterPriceLayerButton.setOnClickListener {
+            l.remove()
+            l = mapView.map.setLayer(rateMapLayers["avgMetersPrice"]!!)
+            l.invalidate("0.0.0")
+        }
     }
 }
