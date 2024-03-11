@@ -4,9 +4,11 @@ import androidx.fragment.app.FragmentActivity
 import com.example.ratemapapp.R
 import com.example.ratemapapp.fragment.RatingFragment
 import com.example.ratemapapp.service.MarkService
+import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.LinearRing
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.geometry.Polygon
+import com.yandex.mapkit.map.CameraPosition
 import com.yandex.mapkit.map.InputListener
 import com.yandex.mapkit.map.Map
 import com.yandex.mapkit.map.PolygonMapObject
@@ -15,6 +17,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
+import kotlin.math.sqrt
 
 class InputListenerImpl(
     private val fragmentActivity: FragmentActivity,
@@ -25,11 +28,12 @@ class InputListenerImpl(
     private var polygon: PolygonMapObject? = null
     override fun onMapTap(map: Map, point: Point) {
         val fragment = findFragment()
-        points.add(point)
+        addPoint(point)
         if (fragment == null) {
             val ratingFragment = RatingFragment(
                 { enqueueCallback() },
-                { closeFragment() }
+                { closeFragment() },
+                { moveToCenter() }
             )
             fragmentActivity.supportFragmentManager
                 .beginTransaction()
@@ -81,4 +85,35 @@ class InputListenerImpl(
     private fun getAveragePoint() = Point(points.sumOf { it.latitude } / points.size, points.sumOf { it.longitude } / points.size)
 
     private fun updateHintText() { findFragment()?.setHintText(getAveragePoint()) }
+
+    private fun moveToCenter() {
+        mapView.map.move(
+            CameraPosition(getAveragePoint(), mapView.map.cameraPosition.zoom, 0.0f, 0.0f),
+            Animation(Animation.Type.SMOOTH, 2F),
+            null
+        )
+    }
+
+    private fun addPoint(point: Point) {
+        if (points.size < 2) {
+            points.add(point)
+        } else {
+            val closestPoints = points.asSequence()
+                .mapIndexed { i, p -> i to p }
+                .sortedBy { (_, p) -> dist(p, point) }
+                .map { (i, _) -> i }
+                .take(2)
+                .sorted()
+                .toList()
+            val removeCount = closestPoints[1] - closestPoints[0] - 1
+            for (i in 0 until removeCount) {
+                points.removeAt(closestPoints[0]+1)
+            }
+            points.add(closestPoints[0]+1, point)
+        }
+    }
+
+    private fun dist(a: Point, b: Point): Double {
+        return sqrt((a.latitude - b.latitude) * (a.latitude - b.latitude) + (a.longitude - b.longitude) * (a.longitude - b.longitude))
+    }
 }

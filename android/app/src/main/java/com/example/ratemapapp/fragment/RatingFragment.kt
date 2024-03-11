@@ -16,6 +16,7 @@ import com.yandex.mapkit.geometry.Point
 class RatingFragment(
     private val onClickSendButton: View.OnClickListener,
     private val onClickCloseButton: View.OnClickListener,
+    private val onClickLayout: View.OnClickListener
 ) : Fragment() {
     private lateinit var view: View
     private lateinit var stars: RatingBar
@@ -38,6 +39,7 @@ class RatingFragment(
         super.onStart()
         sendButton.setOnClickListener(onClickSendButton)
         closeButton.setOnClickListener(onClickCloseButton)
+        rootLayout.setOnClickListener(onClickLayout)
     }
 
     fun setHintText(point: Point) {
