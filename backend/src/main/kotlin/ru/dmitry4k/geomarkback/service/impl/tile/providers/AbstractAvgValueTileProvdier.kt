@@ -7,7 +7,9 @@ import ru.dmitry4k.geomarkback.dto.TileId
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.geo.Distance
 import ru.dmitry4k.geomarkback.service.geo.TileIdMercator
+import ru.dmitry4k.geomarkback.service.tile.LegendRenderer
 import ru.dmitry4k.geomarkback.service.tile.TileRenderer
+import ru.dmitry4k.geomarkback.service.tile.TileSettingsProvider
 import ru.dmitry4k.geomarkback.service.tile.YandexTileProvider
 import kotlin.math.cos
 import kotlin.math.max
@@ -17,7 +19,9 @@ abstract class AbstractAvgValueTileProvdier(
     private val tileIdMercator: TileIdMercator,
     private val distance: Distance,
     private val markService: MarksService,
-    private val tileRenderer: TileRenderer
+    private val tileRenderer: TileRenderer,
+    private val legendRenderer: LegendRenderer,
+    private val tileSettingsProvider: TileSettingsProvider
 ): YandexTileProvider {
     override fun getTile(x: Int, y: Int, z: Int): ByteArray {
         val center = tileIdMercator.getPointByTileId(TileId(x + 0.5, y + 0.5, z))
@@ -46,6 +50,14 @@ abstract class AbstractAvgValueTileProvdier(
         val radius = marksResult.distance.toDouble() * tileSize.toDouble() / maxDistance / cos(45.0) / 1.5
 
         return tileRenderer.renderTile(points, radius.toInt())
+    }
+
+    override fun getLegend(width: Int, height: Int, fontSize: Int): ByteArray {
+        val gradient = listOf(
+            getMinValue() to tileSettingsProvider.getLowestColor(),
+            getMaxValue() to tileSettingsProvider.getHighestColor()
+        )
+        return legendRenderer.renderLegend(width, height, gradient, fontSize)
     }
 
     private fun norm(point: GeoPointDao): Double {
