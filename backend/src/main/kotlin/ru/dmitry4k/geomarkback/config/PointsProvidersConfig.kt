@@ -18,9 +18,7 @@ class PointsProvidersConfig(
         for (area in rateMapProperties.areas) {
             for (layers in rateMapProperties.layers) {
                 providers.add(
-                    RateMapMongoProviderImpl(
-                    area.key, area.key+"_"+layers.key, layers.value.searchDistance, mongoTemplate
-                )
+                    RateMapMongoProviderImpl(area.key, area.key+"_"+layers.key, layers.value.searchDistance, mongoTemplate)
                 )
             }
         }
