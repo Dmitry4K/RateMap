@@ -7,16 +7,23 @@ import ru.dmitry4k.geomarkback.dto.MarksResult
 import ru.dmitry4k.geomarkback.extension.merge
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.RateMapPointProvider
+import ru.dmitry4k.geomarkback.service.geo.Distance
 
 
 @Service
-class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksService {
-    override fun saveMark(mark: Double, lat: Double, lng: Double, radius: Long) {
+class MarksServiceImpl(
+    val pointsProviders: List<RateMapPointProvider>,
+    val distance: Distance
+): MarksService {
+    override fun saveMark(mark: Double, polygon: List<GeoPoint>) {
+        val averageDistanceBetweenPoints = polygon.subList(0, polygon.size - 2)
+            .mapIndexed { idx, point -> distance.distance(point, polygon[idx+1])}
+            .average()
         pointsProviders
-            .filter { it.getAverageDistanceBetweenPoints() >= radius }
+            .filter { it.getAverageDistanceBetweenPoints() >= averageDistanceBetweenPoints / 10 }
             .sortedBy { it.getAverageDistanceBetweenPoints() }
-            .forEachIndexed { idx, provider -> provider.findNearsOrClosest(lng, lat, radius)
-                .take(if (idx == 0) 3 else 1)
+            .forEach { provider -> provider.findByPolygon(polygon)
+//                .take(if (idx == 0) 3 else 1)
                 .forEach { point ->  provider.saveOrUpdate(point.also {
                     it.rates.mark.merge(AvgValue(mark, 1))
                 }) }
@@ -25,7 +32,7 @@ class MarksServiceImpl(val pointsProviders: List<RateMapPointProvider>): MarksSe
 
     override fun getMarks(lat: Double, lng: Double, radius: Long): MarksResult = (pointsProviders
         .sortedByDescending { it.getAverageDistanceBetweenPoints() }
-        .firstOrNull { it.getAverageDistanceBetweenPoints() <= radius / 2.5 } ?: pointsProviders.last())
+        .firstOrNull { it.getAverageDistanceBetweenPoints() <= radius / 5 } ?: pointsProviders.last())
         .let { MarksResult(it.findNearsOrClosest(lng, lat, radius), it.getAverageDistanceBetweenPoints()) }
 
     override fun saveAvgMeterPrice(point: GeoPoint, value: AvgValue) {

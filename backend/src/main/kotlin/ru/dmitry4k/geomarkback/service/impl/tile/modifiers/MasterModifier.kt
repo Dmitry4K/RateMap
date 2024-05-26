@@ -20,6 +20,6 @@ class MasterModifier(tileSettingsProvider: TileSettingsProvider): TileModifier<D
             .let { squareDoubleTileValidator.modify(it) }
             .let { stepInterpolationModifier.modify(it) }
             .let { colorModifier.modify(it) }
-            .let { borderModifier.modify(it) }
+//            .let { borderModifier.modify(it) }
     }
 }

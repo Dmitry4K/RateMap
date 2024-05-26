@@ -4,8 +4,7 @@ import jakarta.validation.constraints.Max
 import jakarta.validation.constraints.Min
 
 data class PostMarkRequestBody(
-    val lat: Double,
-    val lng: Double,
+    val polygon: List<GeoPoint>,
     @Min(1)
     @Max(5)
     val mark: Double,

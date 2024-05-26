@@ -5,7 +5,7 @@ import ru.dmitry4k.geomarkback.dto.GeoPoint
 import ru.dmitry4k.geomarkback.dto.MarksResult
 
 interface MarksService {
-    fun saveMark(mark: Double, lat: Double, lng: Double, radius: Long)
+    fun saveMark(mark: Double, polygon: List<GeoPoint>)
 
     fun getMarks(lat: Double, lng: Double, radius: Long): MarksResult
 

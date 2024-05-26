@@ -34,7 +34,7 @@ abstract class AbstractAvgValueTileProvdier(
             tileIdMercator.getPointByTileId(TileId(x + 1.0, y + 1.0, z))
         ).maxOf { distance.distance(it, center) }
 
-        val searchDistance = maxDistance * 2.0
+        val searchDistance = maxDistance * 1.5
         val marksResult = markService.getMarks(center.lat, center.lng, searchDistance.toLong())
 
         val tileSize = tileRenderer.getTileSize()

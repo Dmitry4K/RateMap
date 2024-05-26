@@ -29,9 +29,9 @@ class MarksAvgValueTileProviderImpl(
         if (count == 0L) 2.5 else value
     }
 
-    override fun getMaxValue(): Double = 0.0
+    override fun getMaxValue(): Double = 5.0
 
-    override fun getMinValue(): Double = 5.0
+    override fun getMinValue(): Double = 0.0
 
     override fun layerName() = "marks"
 }

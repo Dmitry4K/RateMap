@@ -7,14 +7,14 @@ import ru.dmitry4k.geomarkback.dto.PostMarkRequestBody
 import ru.dmitry4k.geomarkback.service.MarksService
 
 @RestController
-@RequestMapping("/api/mark")
+@RequestMapping("/api/v1/mark")
 class MarkController(
     val marksService: MarksService
 ) {
     @PutMapping
     fun putMark(@Valid @RequestBody request: PostMarkRequestBody) {
         with(request) {
-            marksService.saveMark(mark, lat, lng, radius)
+            marksService.saveMark(mark, polygon)
         }
     }
 
