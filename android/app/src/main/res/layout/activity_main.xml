@@ -18,6 +18,16 @@
             android:layout_height="match_parent">
 
         </com.yandex.mapkit.mapview.MapView>
+        <ImageView
+            android:id="@+id/map_legend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="100dp"
+            android:layout_gravity="start|center"
+            tools:ignore="ContentDescription">
+        </ImageView>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

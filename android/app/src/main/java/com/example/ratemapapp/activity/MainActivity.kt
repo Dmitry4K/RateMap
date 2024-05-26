@@ -1,18 +1,28 @@
 package com.example.ratemapapp.activity
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import com.example.ratemapapp.R
 import com.example.ratemapapp.map.extension.setLayer
 import com.example.ratemapapp.map.layer.impl.AvgMeterPriceMapLayerImpl
 import com.example.ratemapapp.map.layer.impl.MarkRateMapLayerImpl
 import com.example.ratemapapp.map.listener.InputListenerImpl
 import com.example.ratemapapp.map.listener.MaxZoomCameraListener
+import com.example.ratemapapp.service.MapLegendService
 import com.yandex.mapkit.Animation
 import com.yandex.mapkit.geometry.Point
 import com.yandex.mapkit.layers.Layer
 import com.yandex.mapkit.map.CameraListener
 import com.yandex.mapkit.map.CameraPosition
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
+
 
 private const val MAX_ZOOM = 12.0f
 
@@ -23,6 +33,7 @@ class MainActivity : MapKitActivity() {
     private lateinit var refreshLayerButton: Button
     private lateinit var onMarkLayerButton: Button
     private lateinit var onAvgMeterPriceLayerButton: Button
+    private lateinit var imageView: ImageView
     private val rateMapLayers = listOf(
         MarkRateMapLayerImpl(),
         AvgMeterPriceMapLayerImpl()
@@ -53,6 +64,8 @@ class MainActivity : MapKitActivity() {
         refreshLayerButton = findViewById(R.id.layer_refresh_button)
         onMarkLayerButton = findViewById(R.id.mark_layer_on_button)
         onAvgMeterPriceLayerButton = findViewById(R.id.avg_meter_price_layer_on_button)
+        imageView = findViewById(R.id.map_legend)
+        setLegend("marks")
 
         onMarkLayerButton.isClickable = false
 
@@ -60,12 +73,38 @@ class MainActivity : MapKitActivity() {
         onMarkLayerButton.setOnClickListener {
             l.remove()
             l = mapView.map.setLayer(rateMapLayers["marks"]!!)
+            setLegend("marks")
             l.invalidate("0.0.0")
         }
         onAvgMeterPriceLayerButton.setOnClickListener {
             l.remove()
             l = mapView.map.setLayer(rateMapLayers["avgMetersPrice"]!!)
+            setLegend("avgMeterPrice")
             l.invalidate("0.0.0")
         }
+    }
+
+    private fun setLegend(mapName: String) {
+        val callback = object: Callback {
+            override fun onFailure(call: Call, e: IOException) = onLegendFailed()
+            override fun onResponse(call: Call, response: Response) = setImageViewContent(response)
+        }
+        MapLegendService.default()
+            .getMapLegend(mapName)
+            .enqueue(callback)
+    }
+
+    private fun setImageViewContent(response: Response) {
+        if (response.code == 200) {
+            val byteArray = response.body?.byteStream()?.readBytes()!!
+            val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+            imageView.setImageBitmap(Bitmap.createBitmap(bmp))
+        } else {
+            onLegendFailed()
+        }
+    }
+
+    private fun onLegendFailed() {
+        Log.w("MAP LEGEND", "CANNOT GET LEGEND")
     }
 }

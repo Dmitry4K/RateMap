@@ -1,6 +1,7 @@
 package com.example.ratemapapp.service.impl
 
 import com.example.ratemapapp.dto.Consts.RATEMAP_API_URL
+import com.example.ratemapapp.dto.GeoPoint
 import com.example.ratemapapp.dto.PostMarkRequestBody
 import com.example.ratemapapp.service.MarkService
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -14,13 +15,13 @@ import java.time.Duration
 import java.time.temporal.ChronoUnit
 
 
-private const val BASE_URL = "$RATEMAP_API_URL/mark"
+private const val BASE_URL = "$RATEMAP_API_URL/v1/mark"
 
 class MarkServiceImpl(
     private val objectMapper: ObjectMapper
 ) : MarkService {
-    override fun setMark(lat: Double, lng: Double, mark: Double, depth: Long): Call {
-        val postMarkRequestBody = PostMarkRequestBody(lat, lng, mark, depth)
+    override fun setMark(mark: Double, polygon: List<GeoPoint>): Call {
+        val postMarkRequestBody = PostMarkRequestBody(polygon, mark)
         val json = objectMapper.writeValueAsBytes(postMarkRequestBody)
         val mediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
         val requestBody = RequestBody.create(mediaType, json)
