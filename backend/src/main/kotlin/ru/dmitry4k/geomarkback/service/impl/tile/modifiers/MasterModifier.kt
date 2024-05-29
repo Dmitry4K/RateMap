@@ -18,7 +18,7 @@ class MasterModifier(tileSettingsProvider: TileSettingsProvider): TileModifier<D
     override fun modify(matrix: MutableList<MutableList<Double>>): MutableList<MutableList<Color>> {
         return matrix
             .let { squareDoubleTileValidator.modify(it) }
-            .let { stepInterpolationModifier.modify(it) }
+//            .let { stepInterpolationModifier.modify(it) }
             .let { colorModifier.modify(it) }
 //            .let { borderModifier.modify(it) }
     }

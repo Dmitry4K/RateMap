@@ -56,7 +56,7 @@ abstract class AbstractAvgValueTileProvdier(
         val gradient = listOf(
             getMinValue() to tileSettingsProvider.getLowestColor(),
             getMaxValue() to tileSettingsProvider.getHighestColor()
-        )
+        ).sortedBy { it.first }
         return legendRenderer.renderLegend(width, height, gradient, fontSize)
     }
 

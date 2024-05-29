@@ -29,9 +29,9 @@ class AvgMeterPriceProviderImpl(
         if (count == 0L) (getMaxValue() + getMinValue()) / 2.0 else value
     }
 
-    override fun getMaxValue(): Double = 1000000.0 // 3462086.9565217393
+    override fun getMaxValue(): Double = 150000.0 // 3462086.9565217393
 
-    override fun getMinValue(): Double = 100000.0 // 58947.36842105263
+    override fun getMinValue(): Double =  500000.0// 58947.36842105263
 
     override fun layerName(): String = "avgMeterPrice"
 }
