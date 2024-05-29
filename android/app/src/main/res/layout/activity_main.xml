@@ -45,6 +45,11 @@
                 android:id="@+id/avg_meter_price_layer_on_button"
                 android:layout_width="48dp"
                 android:layout_height="48dp"/>
+            <Button
+                android:text="C"
+                android:id="@+id/composite_layer_on_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
         </LinearLayout>
         <Button
             android:text="R"

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import com.example.ratemapapp.R
 import com.example.ratemapapp.map.extension.setLayer
 import com.example.ratemapapp.map.layer.impl.AvgMeterPriceMapLayerImpl
+import com.example.ratemapapp.map.layer.impl.CompositeMapLayerImpl
 import com.example.ratemapapp.map.layer.impl.MarkRateMapLayerImpl
 import com.example.ratemapapp.map.listener.InputListenerImpl
 import com.example.ratemapapp.map.listener.MaxZoomCameraListener
@@ -32,11 +33,13 @@ class MainActivity : MapKitActivity() {
     private lateinit var cameraListener: CameraListener
     private lateinit var refreshLayerButton: Button
     private lateinit var onMarkLayerButton: Button
+    private lateinit var onCompositeLayerButton: Button
     private lateinit var onAvgMeterPriceLayerButton: Button
     private lateinit var imageView: ImageView
     private val rateMapLayers = listOf(
         MarkRateMapLayerImpl(),
-        AvgMeterPriceMapLayerImpl()
+        AvgMeterPriceMapLayerImpl(),
+        CompositeMapLayerImpl()
     ).associateBy { it.getName() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +67,7 @@ class MainActivity : MapKitActivity() {
         refreshLayerButton = findViewById(R.id.layer_refresh_button)
         onMarkLayerButton = findViewById(R.id.mark_layer_on_button)
         onAvgMeterPriceLayerButton = findViewById(R.id.avg_meter_price_layer_on_button)
+        onCompositeLayerButton = findViewById(R.id.composite_layer_on_button)
         imageView = findViewById(R.id.map_legend)
         setLegend("marks")
 
@@ -80,6 +84,12 @@ class MainActivity : MapKitActivity() {
             l.remove()
             l = mapView.map.setLayer(rateMapLayers["avgMetersPrice"]!!)
             setLegend("avgMeterPrice")
+            l.invalidate("0.0.0")
+        }
+        onCompositeLayerButton.setOnClickListener {
+            l.remove()
+            l = mapView.map.setLayer(rateMapLayers["composite"]!!)
+            setLegend("composite")
             l.invalidate("0.0.0")
         }
     }

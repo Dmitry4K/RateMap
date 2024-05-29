@@ -31,15 +31,23 @@ def save_file(filename, max_value, min_value):
     return max_value, min_value
 
 def main():
-    max_value, min_value = save_file("cian_export_20_50.json", 0, 100000000000)
+    max_value, min_value = save_file("cian_export_20_30.json", 0, 100000000000)
     print(max_value, min_value)
-    max_value, min_value = save_file("cian_export_50_70.json", max_value, min_value)
+    max_value, min_value = save_file("cian_export_30_40.json", max_value, min_value)
     print(max_value, min_value)
-    max_value, min_value = save_file("cian_export_70_90.json", max_value, min_value)
+    max_value, min_value = save_file("cian_export_40_50.json", max_value, min_value)
     print(max_value, min_value)
-    max_value, min_value = save_file("cian_export_90_110.json", max_value, min_value)
+    max_value, min_value = save_file("cian_export_50_60.json", max_value, min_value)
     print(max_value, min_value)
-    max_value, min_value = save_file("cian_export_110_120.json", max_value, min_value)
+    max_value, min_value = save_file("cian_export_60_70.json", max_value, min_value)
+    print(max_value, min_value)
+    max_value, min_value = save_file("cian_export_70_80.json", max_value, min_value)
+    print(max_value, min_value)
+    max_value, min_value = save_file("cian_export_80_90.json", max_value, min_value)
+    print(max_value, min_value)
+    max_value, min_value = save_file("cian_export_90_100.json", max_value, min_value)
+    print(max_value, min_value)
+    max_value, min_value = save_file("cian_export_100_110.json", max_value, min_value)
     print(max_value, min_value)
 
 

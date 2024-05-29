@@ -58,6 +58,10 @@ request_body = '''{{
             }}
         }}
     }},
+    "only_flat": {{
+        "type": "term",
+        "value": "true"
+    }},
     "extended": true,
     "subdomain": "www"
 }}'''
@@ -106,10 +110,11 @@ def request(top_left, bottom_right, file, price, area):
             response = try_request(top_left, bottom_right, price, area)
             if response:
                 save_response(response, area, file)
-                time.sleep(5)
+                time.sleep(1)
                 print(f"Successfully for:", top_left, bottom_right, price, area)
                 break
-            print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right, price,
+            print(f"ERROR on attempt: {attempt} with error reason: {response.reason} for:", top_left, bottom_right,
+                  price,
                   area)
         except Exception as e:
             print(f"ERROR on attempt: {attempt} with exception: {e} for:", top_left, bottom_right, price,
@@ -120,13 +125,12 @@ def request(top_left, bottom_right, file, price, area):
         time.sleep(sleep_time_secs)
 
 
-
-def main():
+def create_file(area_range):
     top_left = (55.92457508047347, 37.347976435343874)
     bottom_right = (55.571756200146616, 37.83000158182825)
     price_range = (5_000_000, 50_000_000)
     price_step = 5_000_000
-    area_range = (90, 110)
+    # area_range = (90, 110)
     # area_range = (20, 50)
     # area_range = (50, 80)
 
@@ -138,7 +142,7 @@ def main():
     step_bottom = abs((top_left[1] - bottom_right[1]) / grid_size)
     iterations_count = grid_size * grid_size * price_count * area_count
     iteration = 0
-    with open("cian_export.json", 'w') as file:
+    with open(f"cian_export_{area_range[0]}_{area_range[1]}.json", 'w') as file:
         file.write('[\n')
         for i in range(grid_size):
             for j in range(grid_size):
@@ -155,6 +159,18 @@ def main():
                         request(int_top_left, int_bottom_right, file, price, area)
 
         file.write(']\n')
+
+
+def main():
+    #create_file((20, 30))
+    #create_file((30, 40))
+    create_file((40, 50))
+    create_file((50, 60))
+    create_file((60, 70))
+    create_file((70, 80))
+    create_file((80, 90))
+    create_file((90, 100))
+    create_file((100, 110))
 
 
 main()
