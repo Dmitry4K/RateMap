@@ -2,7 +2,7 @@ package ru.dmitry4k.geomarkback.service.impl.tile.providers
 
 import ru.dmitry4k.geomarkback.data.dao.GeoPointDao
 import ru.dmitry4k.geomarkback.dto.GeoPoint
-import ru.dmitry4k.geomarkback.dto.Point3D
+import ru.dmitry4k.geomarkback.dto.Point4D
 import ru.dmitry4k.geomarkback.dto.TileId
 import ru.dmitry4k.geomarkback.service.MarksService
 import ru.dmitry4k.geomarkback.service.geo.Distance
@@ -41,10 +41,11 @@ abstract class AbstractAvgValueTileProvdier(
         val points = marksResult.points.map {
             val geoPoint = GeoPoint(it.point.y, it.point.x)
             val tileId = tileIdMercator.getTileIdByPoint(geoPoint, z)
-            Point3D(
+            Point4D(
                 (tileSize * (tileId.x - x.toDouble())).toInt(),
                 (tileSize * (tileId.y - y.toDouble())).toInt(),
-                norm(it)
+                normValue(it),
+                normWeight(it)
             )
         }
         val radius = marksResult.distance.toDouble() * tileSize.toDouble() / maxDistance / cos(45.0) / 1.5
@@ -60,13 +61,23 @@ abstract class AbstractAvgValueTileProvdier(
         return legendRenderer.renderLegend(width, height, gradient, fontSize)
     }
 
-    private fun norm(point: GeoPointDao): Double {
+    private fun normValue(point: GeoPointDao): Double {
         return max(0.0, min(1.0, (getValue(point) - getMinValue()) / (getMaxValue() - getMinValue())))
     }
 
+
+    private fun normWeight(point: GeoPointDao): Double {
+        return max(0.0, min(1.0, (getWeight(point) - getMinWeight()) / (getMaxWeight() - getMinWeight())))
+    }
     abstract fun getValue(point: GeoPointDao): Double
 
     abstract fun getMaxValue(): Double
 
     abstract fun getMinValue(): Double
+
+    abstract fun getWeight(point: GeoPointDao): Double
+
+    abstract fun getMaxWeight(): Double
+
+    abstract fun getMinWeight(): Double
 }

@@ -33,5 +33,11 @@ class MarksAvgValueTileProviderImpl(
 
     override fun getMinValue(): Double = 0.0
 
+    override fun getWeight(point: GeoPointDao): Double = point.rates.mark.count.toDouble()
+
+    override fun getMaxWeight(): Double = 2.0
+
+    override fun getMinWeight(): Double  = 0.0
+
     override fun layerName() = "marks"
 }

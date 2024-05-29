@@ -1,5 +1,6 @@
 package ru.dmitry4k.geomarkback.service.impl.tile.modifiers
 
+import ru.dmitry4k.geomarkback.dto.Point2D
 import ru.dmitry4k.geomarkback.service.tile.TileModifier
 import java.awt.Color
 import kotlin.math.max
@@ -8,10 +9,10 @@ import kotlin.math.min
 class ColorModifier(
     private val minColor: Color,
     private val maxColor: Color
-): TileModifier<Double, Color> {
-    private val defaultColor = getColor(0.5, minColor, maxColor)
+): TileModifier<Point2D<Double, Double>, Color> {
+    private val defaultColor = getColor(Point2D(0.5, 0.0), minColor, maxColor)
 
-    override fun modify(matrix: MutableList<MutableList<Double>>): MutableList<MutableList<Color>> {
+    override fun modify(matrix: MutableList<MutableList<Point2D<Double, Double>>>): MutableList<MutableList<Color>> {
         val xSize = matrix.size
         val ySize = matrix[0].size
 
@@ -28,11 +29,11 @@ class ColorModifier(
         return colors
     }
 
-    private fun getColor(z: Double, minColor: Color, maxColor: Color): Color {
-        val red = getColorInt(z, minColor.red, maxColor.red)
-        val green = getColorInt(z, minColor.green, maxColor.green)
-        val blue = getColorInt(z, minColor.blue, maxColor.blue)
-        val alpha = getColorInt(z, minColor.alpha, maxColor.alpha)
+    private fun getColor(z: Point2D<Double, Double>, minColor: Color, maxColor: Color): Color {
+        val red = getColorInt(z.x, minColor.red, maxColor.red)
+        val green = getColorInt(z.x, minColor.green, maxColor.green)
+        val blue = getColorInt(z.x, minColor.blue, maxColor.blue)
+        val alpha = getColorInt(z.y, 0, 220)
         return Color(red, green, blue, alpha)
     }
 

@@ -16,7 +16,7 @@ class TileSettingsProviderImpl: TileSettingsProvider {
 
     override fun getHighestColor(): Color = Color.GREEN.withAlpha(alphaInt)
 
-    override fun getBorderColor(): Color = Color.BLACK.withAlpha(alphaInt)
+    override fun getBorderColor(): Color = Color.BLACK.withAlpha(80)
 
     override fun getBorderWidth(): Int = 1
     override fun getStepValue(): Double = 0.05

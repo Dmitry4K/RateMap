@@ -28,5 +28,5 @@ class BorderModifier(
         listOf(x - 1 to y - 1, x to y - 1, x - 1 to y, x to y)
             .filter { (xInt , yInt) -> xInt in matrix.indices && yInt in matrix[0].indices }
             .map { (xInt, yInt) -> matrix[xInt][yInt] }
-            .any { it != matrix[x][y] }
+            .any { it.red != matrix[x][y].red || it.green != matrix[x][y].green || it.blue != matrix[x][y].blue }
 }

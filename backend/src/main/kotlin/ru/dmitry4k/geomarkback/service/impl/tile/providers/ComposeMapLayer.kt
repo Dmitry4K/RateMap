@@ -33,8 +33,8 @@ class ComposeMapLayer(
         val mark = marksAvgProvider.getValue(point)
         val avgMeter = normAvgMeterPrice(
             avgMeterPriceProvder.getValue(point),
-            min(avgMeterPriceProvder.getMinValue(), avgMeterPriceProvder.getMaxValue()),
-            max(avgMeterPriceProvder.getMinValue(), avgMeterPriceProvder.getMaxValue())
+            avgMeterPriceProvder.getMinValue(),
+            avgMeterPriceProvder.getMaxValue()
         )
         return 0.5 * mark + 0.5 * avgMeter
     }
@@ -42,9 +42,25 @@ class ComposeMapLayer(
 
     override fun getMinValue(): Double = 0.0
 
+    override fun getWeight(point: GeoPointDao): Double {
+        val avgMeter = norm(avgMeterPriceProvder.getWeight(point), avgMeterPriceProvder.getMinWeight(), avgMeterPriceProvder.getMaxWeight())
+        val mark = norm(marksAvgProvider.getWeight(point), marksAvgProvider.getMinWeight(), marksAvgProvider.getMaxWeight())
+        return 0.5 * mark + 0.5 * avgMeter
+    }
+
+    override fun getMaxWeight(): Double = 1.0
+
+    override fun getMinWeight(): Double = 0.0
+
     override fun layerName() = "composite"
 
-    private fun normAvgMeterPrice(value: Double, min: Double, max: Double): Double {
-        return 5.0 * (1.0 - (value - min) / (max - min))
+    private fun normAvgMeterPrice(value: Double, a: Double, b: Double): Double {
+        return 5.0 * (1.0 - norm(value, a , b))
+    }
+
+    private fun norm(value: Double, a: Double, b: Double): Double {
+        val min = min(a, b)
+        val max = max(a, b)
+        return (value - min) / (max - min)
     }
 }

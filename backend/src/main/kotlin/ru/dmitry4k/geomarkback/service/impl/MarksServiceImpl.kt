@@ -16,13 +16,21 @@ class MarksServiceImpl(
     val distance: Distance
 ): MarksService {
     override fun saveMark(mark: Double, polygon: List<GeoPoint>) {
-        val averageDistanceBetweenPoints = polygon.subList(0, polygon.size - 2)
+        val centerPoint = GeoPoint(
+            lat = polygon.map { it.lat }.average(),
+            lng = polygon.map { it.lng }.average()
+        )
+        val averageDistanceBetweenPoints = polygon.subList(0, polygon.size - 1)
             .mapIndexed { idx, point -> distance.distance(point, polygon[idx+1])}
             .average()
         pointsProviders
             .filter { it.getAverageDistanceBetweenPoints() >= averageDistanceBetweenPoints / 10 }
             .sortedBy { it.getAverageDistanceBetweenPoints() }
-            .forEach { provider -> provider.findByPolygon(polygon)
+            .forEachIndexed { idx, provider ->
+                (if (idx == 0) provider.findByPolygon(polygon) else provider
+                    .findNearsOrClosest(centerPoint.lng, centerPoint.lat, provider.getAverageDistanceBetweenPoints())
+                    .subList(0, 1)
+                        )
 //                .take(if (idx == 0) 3 else 1)
                 .forEach { point ->  provider.saveOrUpdate(point.also {
                     it.rates.mark.merge(AvgValue(mark, 1))
