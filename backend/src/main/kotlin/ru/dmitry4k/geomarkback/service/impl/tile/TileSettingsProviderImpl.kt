@@ -10,7 +10,7 @@ class TileSettingsProviderImpl: TileSettingsProvider {
     private val alphaFloat: Double = 0.8
     private val alphaInt: Int = (alphaFloat * 256).toInt()
 
-    override fun getTileSize(): Int = 256
+    override fun getTileSize(): Int = 64
 
     override fun getLowestColor(): Color = Color.RED.withAlpha(alphaInt)
 
