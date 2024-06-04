@@ -72,6 +72,59 @@ Rel_D(ayandex, yandex, "")
 
 AddElementTag("microService", $shape=EightSidedShape(), $bgColor="CornflowerBlue", $fontColor="white", $legendText="microservice")
 AddElementTag("storage", $shape=RoundedBoxShape(), $bgColor="lightSkyBlue", $fontColor="white")
+AddRelTag("noReady", $lineStyle = DashedLine())
+AddElementTag("noReady", $bgColor="gray")
+
+System_Boundary(app, "Приложение оценки районов города") {
+    System_Boundary(back, "Серверная часть приложения") {
+        Container(java, "Java сервис", "Java(Kotlin)", "Rest сервисы", $tags = "microservice")
+        ContainerDb(mongo, "База данных", "MongoDB", "Хранение данных о об оценках районов", $tags = "storage")
+        ContainerDb(redis, "База данных/Кеш", "Redis", "Хранение данных о об оценках районов", $tags = "storage")
+    }
+    System_Boundary(front, "Интерфейс приложения") {       
+        Container(android, "Android", "Android SDK", "Отображение рейтинговой карты города, проставление оценок районам")
+        Container(ios, "IOS", "IOS SDK", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "noReady")
+        Container(web, "WEB", "JavaScript", "Отображение рейтинговой карты города, проставление оценок районам", $tags = "noReady")
+        Lay_D(android, ios)
+        Lay_D(ios, web)
+    }
+}
+
+System_Boundary(ext, "Внешние системы и адаптеры") {
+       Container(acian, "Адаптер данных", "HTTP", "")
+       Container(adomclick, "Адаптер данных", "HTTP", "", $tags="noReady")
+       Container(ayandex, "Адаптер данных", "HTTP", "", $tags="noReady")
+       
+       Container(cian, "Циан", "HTTP", "Сервис аренды и покупки помещений")
+       Container(domclick, "Домклик", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+       Container(yandex, "Яндекс.Недвижимость", "HTTP", "Сервис аренды и покупки помещений", $tags="noReady")
+}
+Lay_R(front, back)
+Rel(android, java, "Получение посчитанных оценок и передача проставленных оценок  на карте")
+Rel_R(ios, java, "", $tags="noReady")
+Rel_U(web, java, "", $tags="noReady")
+Rel_U(java, mongo, "Передача данных для хранения")
+Rel(java, redis, "Кеширование данных")
+Rel_U(java, acian, "Получение данных о стоимости недвижомости","HTTP", $tags="noReady")
+Rel(java, adomclick, "","", $tags="noReady")
+Rel(java, ayandex, "", $tags="noReady")
+Lay_D(acian, adomclick)
+Lay_D(adomclick, ayandex)
+Rel_R(acian, cian, "Получение данных о стоимости недвижомости","HTTP")
+Rel_R(adomclick, domclick, "Получение данных о стоимости недвижомости","HTTP")
+Rel_R(ayandex, yandex, "Получение данных о стоимости недвижомости","HTTP")
+
+
+@enduml
+```
+
+
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+AddElementTag("microService", $shape=EightSidedShape(), $bgColor="CornflowerBlue", $fontColor="white", $legendText="microservice")
+AddElementTag("storage", $shape=RoundedBoxShape(), $bgColor="lightSkyBlue", $fontColor="white")
 
 Person(user, "Пользователь")
 

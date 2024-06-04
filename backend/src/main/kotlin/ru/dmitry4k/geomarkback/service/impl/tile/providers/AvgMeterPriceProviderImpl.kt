@@ -31,7 +31,7 @@ class AvgMeterPriceProviderImpl(
 
     override fun getMaxValue(): Double = 150000.0 // 3462086.9565217393
 
-    override fun getMinValue(): Double =  500000.0// 58947.36842105263
+    override fun getMinValue(): Double =  750000.0// 58947.36842105263
 
     override fun getWeight(point: GeoPointDao): Double = point.rates.avgMeterPrice.count.toDouble()
 
