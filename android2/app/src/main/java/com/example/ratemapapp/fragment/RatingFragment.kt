@@ -97,7 +97,9 @@ class RatingFragment(
     private fun closeFragment() {
         activity.supportFragmentManager
             .beginTransaction()
-            .setCustomAnimations(androidx.transition.R.anim.abc_slide_out_bottom, androidx.transition.R.anim.abc_slide_out_bottom)
+            .setCustomAnimations(
+                androidx.appcompat.R.anim.abc_slide_out_bottom,
+                androidx.appcompat.R.anim.abc_slide_out_bottom)
             .remove(this@RatingFragment)
             .commit()
         activity.runOnUiThread { ratingPolygon.removePolygon() }

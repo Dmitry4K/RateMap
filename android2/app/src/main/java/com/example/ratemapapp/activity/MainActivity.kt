@@ -96,7 +96,9 @@ class MainActivity : MapKitActivity() {
 
     private fun setLegend(mapName: String) {
         val callback = object: Callback {
-            override fun onFailure(call: Call, e: IOException) = onLegendFailed()
+            override fun onFailure(call: Call, e: IOException) {
+                onLegendFailed()
+            }
             override fun onResponse(call: Call, response: Response) = setImageViewContent(response)
         }
         MapLegendService.default()
