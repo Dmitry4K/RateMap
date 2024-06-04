@@ -110,7 +110,7 @@ class MainActivity : MapKitActivity() {
         if (response.code == 200) {
             val byteArray = response.body?.byteStream()?.readBytes()!!
             val bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-            imageView.setImageBitmap(Bitmap.createBitmap(bmp))
+            runOnUiThread { imageView.setImageBitmap(Bitmap.createBitmap(bmp)) }
         } else {
             onLegendFailed()
         }

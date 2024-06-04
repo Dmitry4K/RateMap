@@ -20,11 +20,11 @@ class MarksServiceImpl(
             lat = polygon.map { it.lat }.average(),
             lng = polygon.map { it.lng }.average()
         )
-        val averageDistanceBetweenPoints = polygon.subList(0, polygon.size - 1)
-            .mapIndexed { idx, point -> distance.distance(point, polygon[idx+1])}
+        val averageDistanceBetweenCenter = polygon
+            .map { distance.distance(it, centerPoint)}
             .average()
         pointsProviders
-            .filter { it.getAverageDistanceBetweenPoints() >= averageDistanceBetweenPoints / 10 }
+            .filter { it.getAverageDistanceBetweenPoints() >= averageDistanceBetweenCenter / 10 }
             .sortedBy { it.getAverageDistanceBetweenPoints() }
             .forEach { provider ->
                 provider.findByPolygon(polygon).ifEmpty {
