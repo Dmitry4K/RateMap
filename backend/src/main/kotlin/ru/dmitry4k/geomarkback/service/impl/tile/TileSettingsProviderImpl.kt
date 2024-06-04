@@ -19,5 +19,6 @@ class TileSettingsProviderImpl: TileSettingsProvider {
     override fun getBorderColor(): Color = Color.BLACK.withAlpha(80)
 
     override fun getBorderWidth(): Int = 1
-    override fun getStepValue(): Double = 0.15
+
+    override fun getStepValue(): Double = 0.05
 }

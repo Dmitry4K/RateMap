@@ -9,7 +9,7 @@ import okhttp3.Request
 import java.time.Duration
 import java.time.temporal.ChronoUnit
 
-private const val BASE_URL = "${Consts.RATEMAP_API_URL}/v1/layer/%s/legend/png?width=140&height=600&fontSize=30"
+private const val BASE_URL = "${Consts.RATEMAP_API_URL}/v1/layer/%s/legend/png?width=140&height=600&fontSize=40"
 
 class MapLegendServiceImpl: MapLegendService {
     override fun getMapLegend(mapName: String): Call {

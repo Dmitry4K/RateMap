@@ -26,12 +26,12 @@ class MarksServiceImpl(
         pointsProviders
             .filter { it.getAverageDistanceBetweenPoints() >= averageDistanceBetweenPoints / 10 }
             .sortedBy { it.getAverageDistanceBetweenPoints() }
-            .forEachIndexed { idx, provider ->
-                (if (idx == 0) provider.findByPolygon(polygon) else provider
-                    .findNearsOrClosest(centerPoint.lng, centerPoint.lat, provider.getAverageDistanceBetweenPoints())
-                    .subList(0, 1)
-                        )
-//                .take(if (idx == 0) 3 else 1)
+            .forEach { provider ->
+                provider.findByPolygon(polygon).ifEmpty {
+                    provider
+                        .findNearsOrClosest(centerPoint.lng, centerPoint.lat, provider.getAverageDistanceBetweenPoints())
+                        .subList(0, 1)
+                }
                 .forEach { point ->  provider.saveOrUpdate(point.also {
                     it.rates.mark.merge(AvgValue(mark, 1))
                 }) }

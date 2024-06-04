@@ -9,12 +9,15 @@ import com.yandex.mapkit.tiles.UrlProvider
 abstract class AbstractRateMapLayer(
     private val name: String,
     private val format: String,
-    private val options: LayerOptions,
     private val urlProvider: UrlProvider,
     private val imageUrlProvider: ImageUrlProvider,
     private val projectionConsumer: () -> Projection
 ): RateMapLayer {
     private lateinit var projection: Projection
+    private val options: LayerOptions = LayerOptions().apply {
+        this.animateOnActivation = false
+        this.tileAppearingAnimationDuration = 10L
+    }
     override fun init() {
         projection = projectionConsumer()
     }

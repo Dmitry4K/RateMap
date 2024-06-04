@@ -59,9 +59,9 @@ class LegendTileRendererImpl: LegendRenderer {
                 font = Font("Arial", Font.BOLD, fontSize)
                 val rawPosition = ((e.first - min) / (max - min) * image.height).toInt()
                 val position = max(1, min(image.height - fontSize, rawPosition))
-                val string = String.format("%.2f", e.first)
+                val string = String.format("%.0f", e.first)
                 val width = getFontMetrics(font).stringWidth(string)
-                drawString(string, image.width - width, image.height - position)
+                drawString(string, (image.width - width)/2, min(image.height-10, max(10, image.height - position)))
             }
         }
     }
